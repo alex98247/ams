@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="getUserByUsername">
+        <![CDATA[
+            SELECT * FROM t_user WHERE username = ?;
+        ]]>
+    </entry>
+    <entry key="getUsers">
+        <![CDATA[
+            SELECT * FROM t_user;
+        ]]>
+    </entry>
+    <entry key="deleteUserById">
+        <![CDATA[
+            DELETE FROM t_user WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="deleteUserRoleByUserId">
+        <![CDATA[
+            DELETE FROM role_user WHERE user_id = ?;
+        ]]>
+    </entry>
+    <entry key="saveUser">
+        <![CDATA[
+            INSERT INTO t_user (employee_id, username, password, is_locked, expiration_date, pwd_expiration_date, is_system)
+            VALUES (:employee_id, :username, :password, :is_locked, :expiration_date, :pwd_expiration_date, :is_system);
+        ]]>
+    </entry>
+    <entry key="saveEmployee">
+        <![CDATA[
+            INSERT INTO employee (name, surname, patronymic, phone, position) VALUES (:name, :surname, :patronymic, :phone, :position);
+        ]]>
+    </entry>
+    <entry key="getEmployeeById">
+        <![CDATA[
+            SELECT * FROM employee WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="deleteEmployeeById">
+        <![CDATA[
+            DELETE FROM employee WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="getRightsByRoleIds">
+        <![CDATA[
+            SELECT id, name, role_id FROM t_right JOIN role_right ON right_id=id WHERE role_id in (%s);
+        ]]>
+    </entry>
+    <entry key="saveRole">
+        <![CDATA[
+            INSERT INTO t_role (name) VALUES (:name);
+        ]]>
+    </entry>
+    <entry key="getRoles">
+        <![CDATA[
+            SELECT * FROM t_role;
+        ]]>
+    </entry>
+    <entry key="getRolesByUserId">
+        <![CDATA[
+            SELECT * FROM t_role JOIN role_user ON role_user.role_id = t_role.id WHERE user_id = ?;
+        ]]>
+    </entry>
+    <entry key="saveRoleRight">
+        <![CDATA[
+            INSERT INTO role_right (role_id, right_id) VALUES %s;
+        ]]>
+    </entry>
+    <entry key="updateRole">
+        <![CDATA[
+            UPDATE t_role SET name = ? WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="deleteRoleById">
+        <![CDATA[
+            DELETE FROM t_role WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="deleteRoleRightByRoleId">
+        <![CDATA[
+            DELETE FROM role_right WHERE role_id = ?;
+        ]]>
+    </entry>
+</properties>
