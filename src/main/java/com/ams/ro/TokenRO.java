@@ -1,5 +1,7 @@
 package com.ams.ro;
 
+import com.ams.security.SecurityToken;
+
 /**
  * Token REST response object.
  *
@@ -18,5 +20,11 @@ public class TokenRO {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public static TokenRO of(SecurityToken token) {
+        TokenRO tokenRO = new TokenRO();
+        tokenRO.setToken(token.getToken());
+        return tokenRO;
     }
 }

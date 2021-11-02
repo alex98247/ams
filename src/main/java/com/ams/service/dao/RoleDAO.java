@@ -2,6 +2,7 @@ package com.ams.service.dao;
 
 import com.ams.service.po.RolePO;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -19,11 +20,26 @@ public interface RoleDAO {
     void save(RolePO role);
 
     /**
+     * Save roles.
+     *
+     * @param roles - roles to save
+     */
+    void save(Collection<RolePO> roles);
+
+    /**
      * Update role.
      *
      * @param role - role to update
      */
     void update(RolePO role);
+
+
+    /**
+     * Update roles.
+     *
+     * @param roles - roles to update
+     */
+    void update(Collection<RolePO> roles);
 
     /**
      * Get all roles.

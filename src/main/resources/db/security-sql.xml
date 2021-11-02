@@ -21,6 +21,19 @@
             DELETE FROM role_user WHERE user_id = ?;
         ]]>
     </entry>
+    <entry key="updateUser">
+        <![CDATA[
+                UPDATE t_user
+                    SET employee_id = :employee_id,
+                    username = :username,
+                    password = :password,
+                    is_locked = :is_locked,
+                    expiration_date = :expiration_date,
+                    pwd_expiration_date = :pwd_expiration_date,
+                    is_system = :is_system,
+                    WHERE id = :id;
+        ]]>
+    </entry>
     <entry key="saveUser">
         <![CDATA[
             INSERT INTO t_user (employee_id, username, password, is_locked, expiration_date, pwd_expiration_date, is_system)

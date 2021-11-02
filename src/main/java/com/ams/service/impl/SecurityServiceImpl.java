@@ -74,6 +74,7 @@ public class SecurityServiceImpl implements SecurityService {
      * {@inheritDoc}
      */
     @Override
+    //TODO: think about
     public boolean authenticate(String token) {
         SecurityToken securityToken = tokenCache.get(token);
         if (securityToken != null) {
@@ -95,6 +96,7 @@ public class SecurityServiceImpl implements SecurityService {
         if (isTokenValid) {
             tokenCache.delete(tokenString);
         }
+        SecurityContextHolder.getContext().setAuthentication(null);
         return isTokenValid;
     }
 

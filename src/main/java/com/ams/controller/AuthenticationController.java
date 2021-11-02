@@ -1,11 +1,15 @@
 package com.ams.controller;
 
 import com.ams.ro.AuthenticationRequest;
+import com.ams.ro.LogoutRO;
 import com.ams.ro.TokenRO;
 import com.ams.security.SecurityToken;
+import com.ams.security.SecurityUtils;
 import com.ams.service.SecurityService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,16 +23,19 @@ public class AuthenticationController {
         this.securityService = securityService;
     }
 
-    @GetMapping("login")
+    @PostMapping("login")
     public ResponseEntity<TokenRO> login(AuthenticationRequest request) {
-        SecurityToken token = securityService.login("admin", "admin");
-        TokenRO tokenRO = new TokenRO();
-        tokenRO.setToken(token);
-        return ResponseEntity.ok().body(tokenRO);
+        SecurityToken token = securityService.login(request.getLogin(), request.getPassword());
+        return ResponseEntity.ok().body(TokenRO.of(token));
     }
 
-    @GetMapping("logout")
-    public ResponseEntity<String> logout() {
-        return ResponseEntity.ok().build();
+    @PostMapping("logout")
+    public ResponseEntity<LogoutRO> logout(@RequestHeader(HttpHeaders.AUTHORIZATION) String tokenHeader) {
+        if (SecurityUtils.validateTokenHeader(tokenHeader)) {
+            ResponseEntity.ok().body(new LogoutRO("Token validation failed", false));
+        }
+        String token = SecurityUtils.parseToken(tokenHeader);
+        securityService.logout(token);
+        return ResponseEntity.ok().body(new LogoutRO(true));
     }
 }

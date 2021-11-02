@@ -1,7 +1,11 @@
 package com.ams.security;
 
+import com.ams.configuration.CoreConfigurationConstants;
 import com.ams.service.SecurityService;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,12 +26,12 @@ import java.io.IOException;
 @Component
 public class BearerTokenFilter extends OncePerRequestFilter {
     /**
-     * The security service.
+     * Token cache map.
      */
-    private final SecurityService securityService;
+    private final IMap<String, SecurityToken> tokenCache;
 
-    public BearerTokenFilter(SecurityService securityService) {
-        this.securityService = securityService;
+    public BearerTokenFilter(@Qualifier("hazelcastInstance") HazelcastInstance hazelcast) {
+        this.tokenCache = hazelcast.getMap(CoreConfigurationConstants.CORE_SECURITY_TOKENS_MAP_NAME);
     }
 
     /**
@@ -43,7 +47,12 @@ public class BearerTokenFilter extends OncePerRequestFilter {
         }
 
         final String token = header.substring(7);
-        securityService.authenticate(token);
+        SecurityToken securityToken = tokenCache.get(token);
+        if (securityToken != null) {
+            Authentication authentication = securityToken.toAuthentication();
+            authentication.setAuthenticated(true);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }
         chain.doFilter(request, response);
     }
 }

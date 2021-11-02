@@ -60,10 +60,26 @@ public class RoleDAOImpl implements RoleDAO {
      * {@inheritDoc}
      */
     @Override
+    public void save(Collection<RolePO> roles) {
+        roles.forEach(this::save);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void update(RolePO role) {
         jdbcTemplate.update(updateRole, role.getName(), role.getId());
         jdbcTemplate.update(deleteRoleRightByRoleId, role.getId());
         jdbcTemplate.update(saveRoleRight, createSaveRoleRightRequest(role.getId(), role.getRights()));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void update(Collection<RolePO> roles) {
+        roles.forEach(this::update);
     }
 
     /**
