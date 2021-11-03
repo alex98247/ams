@@ -8,6 +8,7 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
@@ -43,5 +44,10 @@ public class ApplicationConfiguration {
     DataSource dataSource() {
         HikariConfig config = new HikariConfig("/hikari.properties");
         return new HikariDataSource(config);
+    }
+
+    @Bean
+    RestTemplateBuilder restTemplateBuilder() {
+        return new RestTemplateBuilder();
     }
 }

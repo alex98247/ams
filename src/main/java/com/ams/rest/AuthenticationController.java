@@ -1,4 +1,4 @@
-package com.ams.controller;
+package com.ams.rest;
 
 import com.ams.ro.AuthenticationRequest;
 import com.ams.ro.LogoutRO;
