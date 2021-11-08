@@ -32,7 +32,7 @@ create table t_user
     id                  serial primary key,
     employee_id         bigint REFERENCES employee (id),
     username            varchar(20),
-    password            varchar(50),
+    password            varchar,
     is_locked           boolean,
     expiration_date     timestamp,
     pwd_expiration_date timestamp,

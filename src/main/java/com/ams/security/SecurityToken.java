@@ -3,6 +3,7 @@ package com.ams.security;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.UUID;
  *
  * @author Alexey Mironov
  */
-public class SecurityToken {
+public class SecurityToken implements Serializable {
     /**
      * The token.
      */

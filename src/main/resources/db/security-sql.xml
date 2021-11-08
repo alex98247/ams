@@ -45,6 +45,11 @@
             INSERT INTO employee (name, surname, patronymic, phone, position) VALUES (:name, :surname, :patronymic, :phone, :position);
         ]]>
     </entry>
+    <entry key="getAllEmployees">
+        <![CDATA[
+            SELECT * FROM employee;
+        ]]>
+    </entry>
     <entry key="getEmployeeById">
         <![CDATA[
             SELECT * FROM employee WHERE id = ?;

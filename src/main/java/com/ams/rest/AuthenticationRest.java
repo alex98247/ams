@@ -9,22 +9,23 @@ import com.ams.service.SecurityService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/")
-public class AuthenticationController {
+public class AuthenticationRest {
 
     private final SecurityService securityService;
 
-    public AuthenticationController(SecurityService securityService) {
+    public AuthenticationRest(SecurityService securityService) {
         this.securityService = securityService;
     }
 
     @PostMapping("login")
-    public ResponseEntity<TokenRO> login(AuthenticationRequest request) {
+    public ResponseEntity<TokenRO> login(@RequestBody AuthenticationRequest request) {
         SecurityToken token = securityService.login(request.getLogin(), request.getPassword());
         return ResponseEntity.ok().body(TokenRO.of(token));
     }

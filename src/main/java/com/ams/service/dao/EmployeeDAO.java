@@ -2,6 +2,8 @@ package com.ams.service.dao;
 
 import com.ams.service.po.EmployeePO;
 
+import java.util.List;
+
 /**
  * Responsible for db operations with Employee.
  *
@@ -15,6 +17,11 @@ public interface EmployeeDAO {
      * @param employee - employee to save
      */
     void save(EmployeePO employee);
+
+    /**
+     * Get all employees.
+     **/
+    List<EmployeePO> getAll();
 
     /**
      * Get employee by id.
