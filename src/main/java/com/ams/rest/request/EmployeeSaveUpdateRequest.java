@@ -1,18 +1,18 @@
-package com.ams.security.dto;
+package com.ams.rest.request;
 
-public class Employee {
-    private Long id;
+public class EmployeeSaveUpdateRequest {
+    private long id;
     private String name;
     private String surname;
     private String patronymic;
     private String position;
     private String phone;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

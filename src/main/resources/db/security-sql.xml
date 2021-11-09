@@ -45,6 +45,17 @@
             INSERT INTO employee (name, surname, patronymic, phone, position) VALUES (:name, :surname, :patronymic, :phone, :position);
         ]]>
     </entry>
+    <entry key="updateEmployee">
+        <![CDATA[
+                UPDATE employee
+                    SET name = :name,
+                    surname = :surname,
+                    patronymic = :patronymic,
+                    position = :position,
+                    phone = :phone,
+                    WHERE id = :id;
+        ]]>
+    </entry>
     <entry key="getAllEmployees">
         <![CDATA[
             SELECT * FROM employee;

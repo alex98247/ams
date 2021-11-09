@@ -25,6 +25,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     private final String getEmployeeById;
     private final String deleteEmployeeById;
     private final String getAllEmployees;
+    private final String updateEmployee;
 
     public EmployeeDAOImpl(JdbcTemplate jdbcTemplate, @Qualifier("security-sql") final Properties sql) {
         this.jdbcTemplate = jdbcTemplate;
@@ -32,6 +33,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         this.getEmployeeById = sql.getProperty("getEmployeeById");
         this.deleteEmployeeById = sql.getProperty("deleteEmployeeById");
         this.getAllEmployees = sql.getProperty("getAllEmployees");
+        this.updateEmployee = sql.getProperty("updateEmployee");
     }
 
     /**
@@ -40,12 +42,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public void save(EmployeePO employee) {
         Map<String, Object> params = new HashMap<>();
-        params.put(EmployeePO.FIELD_NAME, employee.getName());
-        params.put(EmployeePO.FIELD_SURNAME, employee.getSurname());
-        params.put(EmployeePO.FIELD_PATRONYMIC, employee.getPatronymic());
-        params.put(EmployeePO.FIELD_PHONE, employee.getPhone());
-        params.put(EmployeePO.FIELD_POSITION, employee.getPosition());
+        processParams(params, employee);
         jdbcTemplate.update(saveEmployee, params);
+    }
+
+    @Override
+    public void update(EmployeePO employee) {
+        Map<String, Object> params = new HashMap<>();
+        params.put(EmployeePO.FIELD_ID, employee.getId());
+        processParams(params, employee);
+        jdbcTemplate.update(updateEmployee, params);
     }
 
     @Override
@@ -67,5 +73,13 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     public void delete(long id) {
         jdbcTemplate.update(deleteEmployeeById, id);
+    }
+
+    private void processParams(Map<String, Object> params, EmployeePO employee) {
+        params.put(EmployeePO.FIELD_NAME, employee.getName());
+        params.put(EmployeePO.FIELD_SURNAME, employee.getSurname());
+        params.put(EmployeePO.FIELD_PATRONYMIC, employee.getPatronymic());
+        params.put(EmployeePO.FIELD_PHONE, employee.getPhone());
+        params.put(EmployeePO.FIELD_POSITION, employee.getPosition());
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class EmployeeConverter {
 
@@ -26,6 +27,21 @@ public class EmployeeConverter {
             employee.setSurname(employeePo.getSurname());
             target.add(employee);
         }
+        return target;
+    }
+
+    public static EmployeePO convertEmployeeDtoToPo(Employee source) {
+
+        if (Objects.isNull(source)) {
+            return null;
+        }
+
+        EmployeePO target = new EmployeePO();
+        target.setId(source.getId());
+        target.setName(source.getName());
+        target.setPatronymic(source.getPatronymic());
+        target.setPosition(source.getPosition());
+        target.setSurname(source.getSurname());
         return target;
     }
 }

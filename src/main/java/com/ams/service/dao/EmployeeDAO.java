@@ -19,6 +19,13 @@ public interface EmployeeDAO {
     void save(EmployeePO employee);
 
     /**
+     * Update employee.
+     *
+     * @param employee - employee to save
+     */
+    void update(EmployeePO employee);
+
+    /**
      * Get all employees.
      **/
     List<EmployeePO> getAll();
