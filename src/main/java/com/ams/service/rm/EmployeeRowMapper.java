@@ -15,7 +15,7 @@ public class EmployeeRowMapper implements RowMapper<EmployeePO> {
     @Override
     public EmployeePO mapRow(ResultSet rs, int rowNum) throws SQLException {
         EmployeePO po = new EmployeePO();
-        po.setId(rs.getInt(EmployeePO.FIELD_ID));
+        po.setId(rs.getLong(EmployeePO.FIELD_ID));
         po.setName(rs.getString(EmployeePO.FIELD_NAME));
 
         return po;
