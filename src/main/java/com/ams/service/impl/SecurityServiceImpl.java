@@ -8,6 +8,8 @@ import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.NearCacheConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import org.camunda.bpm.engine.ProcessEngine;
+import org.camunda.bpm.engine.rest.util.EngineUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,10 +18,14 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Responsible for authentication and authorization
@@ -67,7 +73,21 @@ public class SecurityServiceImpl implements SecurityService {
         );
         SecurityToken token = SecurityToken.of(authentication);
         tokenCache.put(token.getToken(), token);
+
+        //TODO: think about
+        ProcessEngine engine = EngineUtil.lookupProcessEngine(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
+        engine.getIdentityService().setAuthentication(login, getUserGroups(authentication));
+
         return token;
+    }
+
+    private List<String> getUserGroups(Authentication authentication){
+        List<String> groupIds;
+        groupIds = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+
+        return groupIds;
     }
 
     /**
@@ -97,6 +117,8 @@ public class SecurityServiceImpl implements SecurityService {
             tokenCache.delete(tokenString);
         }
         SecurityContextHolder.getContext().setAuthentication(null);
+        ProcessEngine engine = EngineUtil.lookupProcessEngine(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
+        engine.getIdentityService().clearAuthentication();
         return isTokenValid;
     }
 

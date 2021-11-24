@@ -1,7 +1,6 @@
 package com.ams.security;
 
 import com.ams.configuration.CoreConfigurationConstants;
-import com.ams.service.SecurityService;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.apache.commons.lang3.StringUtils;

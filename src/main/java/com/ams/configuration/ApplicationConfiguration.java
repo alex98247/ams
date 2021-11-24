@@ -67,7 +67,7 @@ public class ApplicationConfiguration {
     @Bean
     public SpringProcessEngineConfiguration engineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager, @Value("classpath*:workflow/*.bpmn") Resource[] deploymentResources) {
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
-        configuration.setProcessEngineName("engine");
+        configuration.setProcessEngineName(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
         configuration.setDataSource(dataSource);
         configuration.setTransactionManager(transactionManager);
         configuration.setDatabaseSchemaUpdate("true");
