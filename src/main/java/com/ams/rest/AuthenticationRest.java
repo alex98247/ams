@@ -1,8 +1,8 @@
 package com.ams.rest;
 
-import com.ams.ro.AuthenticationRequest;
-import com.ams.ro.LogoutRO;
-import com.ams.ro.TokenRO;
+import com.ams.rest.request.AuthenticationRequest;
+import com.ams.rest.response.LogoutRO;
+import com.ams.rest.response.TokenRO;
 import com.ams.security.SecurityToken;
 import com.ams.security.SecurityUtils;
 import com.ams.service.SecurityService;

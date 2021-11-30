@@ -1,4 +1,4 @@
-package com.ams.ro;
+package com.ams.rest.response;
 
 /**
  * Logout REST response object.

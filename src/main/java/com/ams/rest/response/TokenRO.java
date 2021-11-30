@@ -1,4 +1,4 @@
-package com.ams.ro;
+package com.ams.rest.response;
 
 import com.ams.security.SecurityToken;
 

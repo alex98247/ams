@@ -5,6 +5,7 @@ import com.ams.service.po.EmployeePO;
 import com.ams.service.rm.EmployeeRowMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -21,14 +22,18 @@ import java.util.Properties;
 public class EmployeeDAOImpl implements EmployeeDAO {
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
     private final String saveEmployee;
     private final String getEmployeeById;
     private final String deleteEmployeeById;
     private final String getAllEmployees;
     private final String updateEmployee;
 
-    public EmployeeDAOImpl(JdbcTemplate jdbcTemplate, @Qualifier("security-sql") final Properties sql) {
+    public EmployeeDAOImpl(JdbcTemplate jdbcTemplate,
+                           NamedParameterJdbcTemplate namedParameterJdbcTemplate,
+                           @Qualifier("security-sql") final Properties sql) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
         this.saveEmployee = sql.getProperty("saveEmployee");
         this.getEmployeeById = sql.getProperty("getEmployeeById");
         this.deleteEmployeeById = sql.getProperty("deleteEmployeeById");
@@ -43,7 +48,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     public void save(EmployeePO employee) {
         Map<String, Object> params = new HashMap<>();
         processParams(params, employee);
-        jdbcTemplate.update(saveEmployee, params);
+        namedParameterJdbcTemplate.update(saveEmployee, params);
     }
 
     @Override
@@ -51,7 +56,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         Map<String, Object> params = new HashMap<>();
         params.put(EmployeePO.FIELD_ID, employee.getId());
         processParams(params, employee);
-        jdbcTemplate.update(updateEmployee, params);
+        namedParameterJdbcTemplate.update(updateEmployee, params);
     }
 
     @Override

@@ -39,6 +39,7 @@ public class EmployeeConverter {
         EmployeePO target = new EmployeePO();
         target.setId(source.getId());
         target.setName(source.getName());
+        target.setPhone(source.getPhone());
         target.setPatronymic(source.getPatronymic());
         target.setPosition(source.getPosition());
         target.setSurname(source.getSurname());

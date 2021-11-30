@@ -1,4 +1,4 @@
-package com.ams.ro;
+package com.ams.rest.request;
 
 public class AuthenticationRequest {
 

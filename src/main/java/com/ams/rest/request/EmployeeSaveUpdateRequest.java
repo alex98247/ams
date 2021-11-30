@@ -1,18 +1,18 @@
 package com.ams.rest.request;
 
 public class EmployeeSaveUpdateRequest {
-    private long id;
+    private Long id;
     private String name;
     private String surname;
     private String patronymic;
     private String position;
     private String phone;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
