@@ -1,4 +1,4 @@
-package com.ams.service.dao;
+package com.ams.dao;
 
 import com.ams.service.po.RightPO;
 

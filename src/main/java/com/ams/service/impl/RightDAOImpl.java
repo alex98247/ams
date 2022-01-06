@@ -1,6 +1,6 @@
 package com.ams.service.impl;
 
-import com.ams.service.dao.RightDAO;
+import com.ams.dao.RightDAO;
 import com.ams.service.po.RightPO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;

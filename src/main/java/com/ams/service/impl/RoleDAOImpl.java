@@ -1,7 +1,7 @@
 package com.ams.service.impl;
 
-import com.ams.service.dao.RightDAO;
-import com.ams.service.dao.RoleDAO;
+import com.ams.dao.RightDAO;
+import com.ams.dao.RoleDAO;
 import com.ams.service.po.RightPO;
 import com.ams.service.po.RolePO;
 import com.ams.service.rm.RoleRowMapper;

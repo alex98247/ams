@@ -1,4 +1,4 @@
-package com.ams.service.dao;
+package com.ams.dao;
 
 import com.ams.service.po.EmployeePO;
 
@@ -16,7 +16,7 @@ public interface EmployeeDAO {
      *
      * @param employee - employee to save
      */
-    void save(EmployeePO employee);
+    void create(EmployeePO employee);
 
     /**
      * Update employee.

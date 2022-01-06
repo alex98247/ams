@@ -1,5 +1,6 @@
 package com.ams.configuration;
 
+import com.ams.service.workflow.WorkflowConstants;
 import com.ams.workflow.Starter;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.GroupConfig;
@@ -18,9 +19,11 @@ import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.spring.ProcessEngineFactoryBean;
 import org.camunda.bpm.engine.spring.SpringProcessEngineConfiguration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.session.hazelcast.config.annotation.web.http.EnableHazelcastHttpSession;
@@ -67,7 +70,7 @@ public class ApplicationConfiguration {
     @Bean
     public SpringProcessEngineConfiguration engineConfiguration(DataSource dataSource, PlatformTransactionManager transactionManager, @Value("classpath*:workflow/*.bpmn") Resource[] deploymentResources) {
         SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
-        configuration.setProcessEngineName(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
+        configuration.setProcessEngineName(WorkflowConstants.WORKFLOW_ENGINE_NAME);
         configuration.setDataSource(dataSource);
         configuration.setTransactionManager(transactionManager);
         configuration.setDatabaseSchemaUpdate("true");
@@ -90,5 +93,12 @@ public class ApplicationConfiguration {
     @Bean
     RestTemplateBuilder restTemplateBuilder() {
         return new RestTemplateBuilder();
+    }
+
+    @Bean("application-sql")
+    public PropertiesFactoryBean dataSql() {
+        final PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
+        propertiesFactoryBean.setLocation(new ClassPathResource("/db/application-sql.xml"));
+        return propertiesFactoryBean;
     }
 }

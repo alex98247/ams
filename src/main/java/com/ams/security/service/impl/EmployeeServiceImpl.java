@@ -2,7 +2,7 @@ package com.ams.security.service.impl;
 
 import com.ams.security.dto.Employee;
 import com.ams.security.service.EmployeeService;
-import com.ams.service.dao.EmployeeDAO;
+import com.ams.dao.EmployeeDAO;
 import com.ams.security.converter.EmployeeConverter;
 import com.ams.service.po.EmployeePO;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         if (employeePO.getId() == null) {
-            employeeDAO.save(employeePO);
+            employeeDAO.create(employeePO);
         } else {
             employeeDAO.update(employeePO);
         }

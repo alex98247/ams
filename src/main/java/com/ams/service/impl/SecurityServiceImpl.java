@@ -3,6 +3,7 @@ package com.ams.service.impl;
 import com.ams.configuration.CoreConfigurationConstants;
 import com.ams.security.SecurityToken;
 import com.ams.service.SecurityService;
+import com.ams.service.workflow.WorkflowConstants;
 import com.hazelcast.config.InMemoryFormat;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.NearCacheConfig;
@@ -20,7 +21,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -75,7 +75,7 @@ public class SecurityServiceImpl implements SecurityService {
         tokenCache.put(token.getToken(), token);
 
         //TODO: think about
-        ProcessEngine engine = EngineUtil.lookupProcessEngine(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
+        ProcessEngine engine = EngineUtil.lookupProcessEngine(WorkflowConstants.WORKFLOW_ENGINE_NAME);
         engine.getIdentityService().setAuthentication(login, getUserGroups(authentication));
 
         return token;
@@ -117,7 +117,7 @@ public class SecurityServiceImpl implements SecurityService {
             tokenCache.delete(tokenString);
         }
         SecurityContextHolder.getContext().setAuthentication(null);
-        ProcessEngine engine = EngineUtil.lookupProcessEngine(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME);
+        ProcessEngine engine = EngineUtil.lookupProcessEngine(WorkflowConstants.WORKFLOW_ENGINE_NAME);
         engine.getIdentityService().clearAuthentication();
         return isTokenValid;
     }

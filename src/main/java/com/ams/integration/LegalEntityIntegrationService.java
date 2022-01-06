@@ -9,7 +9,7 @@ import java.util.List;
  *
  * @author Alexey Mironov
  */
-public interface LegalEntityService {
+public interface LegalEntityIntegrationService {
 
     /**
      * Get legal entity info by inn.
@@ -17,7 +17,7 @@ public interface LegalEntityService {
      * @param ctx - context includes parameters of legal entity
      * @return legal entiti
      */
-    LegalEntityDetails getLegalEntityByInn(LegalEntityContext ctx);
+    LegalEntityDetails searchLegalEntityByInn(LegalEntityContext ctx);
 
     /**
      * Find legal entities for full text query.

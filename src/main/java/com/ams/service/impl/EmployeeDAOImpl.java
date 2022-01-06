@@ -1,6 +1,6 @@
 package com.ams.service.impl;
 
-import com.ams.service.dao.EmployeeDAO;
+import com.ams.dao.EmployeeDAO;
 import com.ams.service.po.EmployeePO;
 import com.ams.service.rm.EmployeeRowMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,7 +40,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
      * {@inheritDoc}
      */
     @Override
-    public void save(EmployeePO employee) {
+    public void create(EmployeePO employee) {
         Map<String, Object> params = new HashMap<>();
         processParams(params, employee);
         jdbcTemplate.update(saveEmployee, params);

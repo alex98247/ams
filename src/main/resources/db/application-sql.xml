@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="getApplicationById">
+        <![CDATA[
+            SELECT * FROM application WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="deleteApplicationById">
+        <![CDATA[
+            DELETE FROM application WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="createApplication">
+        <![CDATA[
+            INSERT INTO application (customer_id, finished, manager_username)
+            VALUES (?, ?, ?);
+        ]]>
+    </entry>
+    <entry key="updateApplication">
+        <![CDATA[
+                UPDATE application
+                    SET customer_id = ?,
+                    finished = ?,
+                    manager_username = ?,
+                    WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="getLegalEntityById">
+        <![CDATA[
+            SELECT * FROM legal_entity WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="getLegalEntityByName">
+        <![CDATA[
+            SELECT * FROM legal_entity WHERE name LIKE ?;
+        ]]>
+    </entry>
+    <entry key="deleteLegalEntityById">
+        <![CDATA[
+            DELETE FROM legal_entity WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="createLegalEntity">
+        <![CDATA[
+            INSERT INTO legal_entity (name, inn, ogrn, kpp)
+            VALUES (?, ?, ?, ?);
+        ]]>
+    </entry>
+</properties>

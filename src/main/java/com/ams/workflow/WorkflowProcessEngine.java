@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Map;
 
+//TODO: remove
 @Service
 public class WorkflowProcessEngine {
 
@@ -15,9 +16,9 @@ public class WorkflowProcessEngine {
         this.processEngine = processEngine;
     }
 
-    public void assign(String taskId, String userName) {
+    public void assign(String taskId, String username) {
         try {
-            processEngine.getTaskService().claim(taskId, userName);
+            processEngine.getTaskService().claim(taskId, username);
         } catch (Exception e) {
             final String message = "Assign task with id '{}' to user '{}' failed.";
             /*LOGGER.warn(message, taskId, userName);

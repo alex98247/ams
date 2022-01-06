@@ -20,6 +20,10 @@ public class SecurityToken implements Serializable {
      */
     private String token;
     /**
+     * The username.
+     */
+    private String username;
+    /**
      * The created at.
      */
     private Date createdAt;
@@ -45,10 +49,19 @@ public class SecurityToken implements Serializable {
         securityToken.createdAt = new Date();
         securityToken.token = UUID.randomUUID().toString();
         securityToken.rights.addAll(authentication.getAuthorities());
+        securityToken.username = authentication.getName();
         return securityToken;
     }
 
     public Authentication toAuthentication() {
         return new BearerToken(token, rights);
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

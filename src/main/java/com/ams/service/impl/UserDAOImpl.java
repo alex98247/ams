@@ -1,7 +1,7 @@
 package com.ams.service.impl;
 
-import com.ams.service.dao.RoleDAO;
-import com.ams.service.dao.UserDAO;
+import com.ams.dao.RoleDAO;
+import com.ams.dao.UserDAO;
 import com.ams.service.po.UserPO;
 import com.ams.service.rm.UserRowMapper;
 import org.springframework.beans.factory.annotation.Qualifier;

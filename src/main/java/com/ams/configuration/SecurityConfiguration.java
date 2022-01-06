@@ -74,5 +74,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         propertiesFactoryBean.setLocation(new ClassPathResource("/db/security-sql.xml"));
         return propertiesFactoryBean;
     }
-
 }

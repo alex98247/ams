@@ -14,6 +14,8 @@ public class TokenRO {
      */
     private String token;
 
+    private String username;
+
     public String getToken() {
         return token;
     }
@@ -25,6 +27,15 @@ public class TokenRO {
     public static TokenRO of(SecurityToken token) {
         TokenRO tokenRO = new TokenRO();
         tokenRO.setToken(token.getToken());
+        tokenRO.setUsername(token.getUsername());
         return tokenRO;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

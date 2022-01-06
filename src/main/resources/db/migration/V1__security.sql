@@ -36,7 +36,8 @@ create table t_user
     is_locked           boolean,
     expiration_date     timestamp,
     pwd_expiration_date timestamp,
-    is_system           boolean
+    is_system           boolean,
+    UNIQUE(username)
 );
 
 create table role_user

@@ -1,7 +1,7 @@
 package com.ams.integration.dadata.impl;
 
 import com.ams.integration.LegalEntityContext;
-import com.ams.integration.LegalEntityService;
+import com.ams.integration.LegalEntityIntegrationService;
 import com.ams.integration.dadata.impl.mapper.DadataMapper;
 import com.ams.integration.dadata.impl.ro.request.DadataLegalEntityByInnRequest;
 import com.ams.integration.dadata.impl.ro.request.DadataLegalEntitySuggestRequest;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * @author Alexey Mironov
  */
 @Service
-public class DadataLegalEntityService implements LegalEntityService {
+public class DadataLegalEntityIntegrationService implements LegalEntityIntegrationService {
     /**
      * The api key.
      */
@@ -50,7 +50,7 @@ public class DadataLegalEntityService implements LegalEntityService {
      */
     private final RestTemplate restTemplate;
 
-    public DadataLegalEntityService(RestTemplateBuilder restTemplateBuilder) {
+    public DadataLegalEntityIntegrationService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
     }
 
@@ -58,7 +58,7 @@ public class DadataLegalEntityService implements LegalEntityService {
      * {@inheritDoc}
      */
     @Override
-    public LegalEntityDetails getLegalEntityByInn(LegalEntityContext ctx) {
+    public LegalEntityDetails searchLegalEntityByInn(LegalEntityContext ctx) {
 
         DadataLegalEntityByInnRequest dadataRequest = new DadataLegalEntityByInnRequest();
         dadataRequest.setKpp(ctx.getKpp());
