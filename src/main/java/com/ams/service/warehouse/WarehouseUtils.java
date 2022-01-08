@@ -11,8 +11,8 @@ public class WarehouseUtils {
     private WarehouseUtils() {
     }
 
-    public static Map<Good, Integer> getDiff(Map<Good, Integer> warehouseGoods, Map<Good, Integer> applicationGoods) {
-        Map<Good, Integer> result = new HashMap<>();
+    public static Map<Long, Integer> getDiff(Map<Long, Integer> warehouseGoods, Map<Long, Integer> applicationGoods) {
+        Map<Long, Integer> result = new HashMap<>();
         for (var good : applicationGoods.entrySet()) {
             Integer count = warehouseGoods.get(good.getKey());
             if (count == null) {
@@ -24,7 +24,7 @@ public class WarehouseUtils {
         return result;
     }
 
-    public static boolean needOrder(Map<Good, Integer> warehouseGoods, Map<Good, Integer> applicationGoods) {
+    public static boolean needOrder(Map<Long, Integer> warehouseGoods, Map<Long, Integer> applicationGoods) {
         return !getDiff(warehouseGoods, applicationGoods).isEmpty();
     }
 }

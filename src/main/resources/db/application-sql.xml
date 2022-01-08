@@ -47,4 +47,63 @@
             VALUES (?, ?, ?, ?);
         ]]>
     </entry>
+
+    <entry key="createGoodApplication">
+        <![CDATA[
+            INSERT INTO good_application (good_id, application_id, count)
+            VALUES (?, ?, ?);
+        ]]>
+    </entry>
+    <entry key="findGoodApplication">
+        <![CDATA[
+            SELECT * FROM good_application WHERE application_id = ?;
+        ]]>
+    </entry>
+    <entry key="removeGoodApplication">
+        <![CDATA[
+            DELETE FROM good_application WHERE application_id = ?;
+        ]]>
+    </entry>
+
+    <entry key="insertGood">
+        <![CDATA[
+            INSERT INTO good (name, count)
+            VALUES (?, ?);
+        ]]>
+    </entry>
+    <entry key="updateGood">
+        <![CDATA[
+                UPDATE good
+                    SET name = ?,
+                    count = ?,
+                    WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="findGood">
+        <![CDATA[
+            SELECT * FROM good WHERE id = ?;
+        ]]>
+    </entry>
+    <entry key="removeGood">
+        <![CDATA[
+            DELETE FROM good WHERE id = ?;
+        ]]>
+    </entry>
+
+    <entry key="reserveGood">
+        <![CDATA[
+            INSERT INTO good_reserve (good_id, count) VALUES (?, ?);
+        ]]>
+    </entry>
+    <entry key="releaseGood">
+        <![CDATA[
+            DELETE FROM good_reserve WHERE good_id in (%s);
+        ]]>
+    </entry>
+    <entry key="findGood">
+        <![CDATA[
+            SELECT * FROM good_reserve WHERE good_id in (%s);
+        ]]>
+    </entry>
+
 </properties>

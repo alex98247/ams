@@ -9,4 +9,6 @@ public interface LegalEntityService {
     List<LegalEntity> getLegalEntities(String name);
 
     void upsert(LegalEntity legalEntity);
+
+    LegalEntity getLegalEntity(long id);
 }

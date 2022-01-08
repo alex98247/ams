@@ -4,7 +4,7 @@ import com.ams.service.application.po.ApplicationPO;
 
 public interface ApplicationDAO {
 
-    ApplicationPO get(long id);
+    ApplicationPO find(long id);
 
     void create(ApplicationPO application);
 

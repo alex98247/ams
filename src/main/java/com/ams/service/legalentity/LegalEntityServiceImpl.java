@@ -35,4 +35,17 @@ public class LegalEntityServiceImpl implements LegalEntityService {
             legalEntityDAO.create(LegalEntityConverter.convertEmployeeDtoToPo(legalEntity));
         }
     }
+
+    @Override
+    public LegalEntity getLegalEntity(long id) {
+        LegalEntityPO po = legalEntityDAO.get(id);
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setOgrn(po.getOgrn());
+        legalEntity.setOgrn(po.getOgrn());
+        legalEntity.setKpp(po.getKpp());
+        legalEntity.setId(po.getId());
+        legalEntity.setName(po.getName());
+
+        return legalEntity;
+    }
 }

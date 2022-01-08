@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @Repository
@@ -17,6 +19,9 @@ public class ApplicationDAOImpl implements ApplicationDAO {
     private final String deleteApplicationById;
     private final String createApplication;
     private final String updateApplication;
+    private final String createGoodApplication;
+    private final String removeGoodApplication;
+    private final String findGoodApplication;
 
     public ApplicationDAOImpl(JdbcTemplate jdbcTemplate, @Qualifier("application-sql") final Properties sql) {
         this.jdbcTemplate = jdbcTemplate;
@@ -24,25 +29,49 @@ public class ApplicationDAOImpl implements ApplicationDAO {
         deleteApplicationById = sql.getProperty("deleteApplicationById");
         createApplication = sql.getProperty("createApplication");
         updateApplication = sql.getProperty("updateApplication");
+        createGoodApplication = sql.getProperty("createGoodApplication");
+        removeGoodApplication = sql.getProperty("removeGoodApplication");
+        findGoodApplication = sql.getProperty("findGoodApplication");
     }
 
     @Override
-    public ApplicationPO get(long id) {
-        return jdbcTemplate.queryForObject(getApplicationById, ApplicationRowMapper.DEFAULT_ROW_MAPPER, id);
+    public ApplicationPO find(long id) {
+        ApplicationPO applicationPO = jdbcTemplate.queryForObject(getApplicationById, ApplicationRowMapper.DEFAULT_ROW_MAPPER, id);
+        Map<Long, Integer> goods = new HashMap<>();
+        jdbcTemplate.query(findGoodApplication, rs -> {
+            if (rs.next()) {
+                goods.put(rs.getLong(ApplicationPO.FIELD_GOOD_ID), rs.getInt(ApplicationPO.FIELD_GOOD_COUNT));
+            }
+            return null;
+        }, id);
+
+        if (applicationPO != null) {
+            applicationPO.setGoods(goods);
+        }
+
+        return applicationPO;
     }
 
     @Override
     public void create(ApplicationPO application) {
         jdbcTemplate.update(createApplication, application.getCustomerId(), application.getFinished(), application.getManagerUsername());
+        for (var good : application.getGoods().entrySet()) {
+            jdbcTemplate.update(createGoodApplication, good.getKey(), application.getId(), good.getValue());
+        }
     }
 
     @Override
     public void update(ApplicationPO application) {
         jdbcTemplate.update(updateApplication, application.getCustomerId(), application.getFinished(), application.getManagerUsername(), application.getId());
+        jdbcTemplate.update(removeGoodApplication, application.getId());
+        for (var good : application.getGoods().entrySet()) {
+            jdbcTemplate.update(createGoodApplication, good.getKey(), application.getId(), good.getValue());
+        }
     }
 
     @Override
     public void delete(long id) {
         jdbcTemplate.update(deleteApplicationById, id);
+        jdbcTemplate.update(removeGoodApplication, id);
     }
 }

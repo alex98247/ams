@@ -5,6 +5,7 @@ import com.ams.service.LegalEntityService;
 import com.ams.service.legalentity.LegalEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,13 @@ public class LegalEntityRest {
     @GetMapping
     public ResponseEntity<List<LegalEntity>> getLegalEntity(@QueryParam("name") String name) {
         List<LegalEntity> result = legalEntityService.getLegalEntities(name);
+        return ResponseEntity.ok().body(result);
+    }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<LegalEntity> getLegalEntityById(@PathVariable("id") String id) {
+        LegalEntity result = legalEntityService.getLegalEntity(Integer.parseInt(id));
         return ResponseEntity.ok().body(result);
     }
 

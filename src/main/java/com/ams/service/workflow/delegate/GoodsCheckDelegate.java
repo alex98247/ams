@@ -6,7 +6,6 @@ import com.ams.service.LoadBalancer;
 import com.ams.service.WarehouseService;
 import com.ams.service.WorkflowService;
 import com.ams.service.application.Application;
-import com.ams.service.warehouse.Good;
 import com.ams.service.warehouse.WarehouseUtils;
 import com.ams.service.workflow.WorkflowConstants;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -39,7 +38,7 @@ public class GoodsCheckDelegate implements JavaDelegate {
     public void execute(DelegateExecution execution) throws Exception {
         int id = (int) execution.getVariable(WorkflowConstants.APPLICATION_ID_KEY);
         Application application = applicationService.get(id);
-        Map<Good, Integer> warehouseGoods = warehouseService.getGoodsCount(application.getGoods().keySet());
+        Map<Long, Integer> warehouseGoods = warehouseService.getGoodsCount(application.getGoods().keySet());
 
         boolean needOrder = WarehouseUtils.needOrder(warehouseGoods, application.getGoods());
         Map<String, Object> variables = new HashMap<>();

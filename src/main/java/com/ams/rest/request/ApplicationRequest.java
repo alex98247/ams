@@ -1,10 +1,13 @@
-package com.ams.service.application;
+package com.ams.rest.request;
 
-import com.ams.rest.request.ApplicationRequest;
+import com.ams.service.warehouse.Good;
 
 import java.util.Map;
 
-public class Application {
+/**
+ * @author Alexey Mironov
+ */
+public class ApplicationRequest {
     private Long id;
     private long customerId;
     private boolean needDelivery;
@@ -58,16 +61,5 @@ public class Application {
 
     public void setNeedDelivery(boolean needDelivery) {
         this.needDelivery = needDelivery;
-    }
-
-    public static Application of(ApplicationRequest application) {
-        Application result = new Application();
-        result.setCustomerId(application.getCustomerId());
-        result.setFinished(application.getFinished());
-        result.setId(application.getId());
-        result.setNeedDelivery(application.needDelivery());
-        result.setGoods(application.getGoods());
-        result.setManagerUsername(application.getManagerUsername());
-        return result;
     }
 }

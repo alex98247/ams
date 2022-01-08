@@ -10,9 +10,13 @@ import java.util.Set;
  */
 public interface WarehouseService {
 
-    void reserve(Map<Good, Integer> goods);
+    void reserve(Map<Long, Integer> goods);
 
-    void release(Map<Good, Integer> goods);
+    void release(Map<Long, Integer> goods);
 
-    Map<Good, Integer> getGoodsCount(Set<Good> goods);
+    Map<Long, Integer> getGoodsCount(Set<Long> goods);
+
+    void addNewGood(Good good, int count);
+
+    void addGood(long goodId, int count);
 }

@@ -9,9 +9,9 @@ create table legal_entity
 
 create table good
 (
-    item_number integer primary key,
-    name        varchar,
-    count       integer
+    id    integer primary key,
+    name  varchar,
+    count integer
 );
 
 
@@ -25,14 +25,14 @@ create table application
 
 create table good_reserve
 (
-    item_number    integer primary key,
-    application_id bigint REFERENCES application (id),
+    good_id        integer primary key,
     count          integer
 );
 
 create table good_application
 (
     id             serial primary key,
-    good_id        bigint REFERENCES good (item_number),
-    application_id bigint REFERENCES application (id)
+    good_id        bigint REFERENCES good (id),
+    application_id bigint REFERENCES application (id),
+    count          integer
 );
