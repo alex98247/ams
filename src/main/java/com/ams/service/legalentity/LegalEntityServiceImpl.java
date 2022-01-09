@@ -48,4 +48,17 @@ public class LegalEntityServiceImpl implements LegalEntityService {
 
         return legalEntity;
     }
+
+    @Override
+    public LegalEntity getLegalEntityByInn(String inn) {
+        LegalEntityPO po = legalEntityDAO.getByInn(inn);
+        LegalEntity legalEntity = new LegalEntity();
+        legalEntity.setOgrn(po.getOgrn());
+        legalEntity.setOgrn(po.getOgrn());
+        legalEntity.setKpp(po.getKpp());
+        legalEntity.setId(po.getId());
+        legalEntity.setName(po.getName());
+
+        return legalEntity;
+    }
 }

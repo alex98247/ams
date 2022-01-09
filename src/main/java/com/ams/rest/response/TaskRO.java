@@ -10,12 +10,14 @@ public class TaskRO {
     private String id;
     private String name;
     private String definitionKey;
+    private String applicationId;
 
     public static TaskRO of(Task task) {
         TaskRO result = new TaskRO();
         result.setId(task.getId());
         result.setName(task.getName());
         result.setDefinitionKey(task.getTaskDefinitionKey());
+        result.setApplicationId(task.getProcessInstanceId());
         return result;
     }
 
@@ -41,5 +43,13 @@ public class TaskRO {
 
     public void setDefinitionKey(String definitionKey) {
         this.definitionKey = definitionKey;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

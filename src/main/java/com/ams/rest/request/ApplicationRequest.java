@@ -1,7 +1,6 @@
 package com.ams.rest.request;
 
-import com.ams.service.warehouse.Good;
-
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,10 +9,10 @@ import java.util.Map;
 public class ApplicationRequest {
     private Long id;
     private long customerId;
-    private boolean needDelivery;
-    private Boolean finished;
+    private boolean needDelivery = false;
+    private Boolean finished = false;
     private String managerUsername;
-    private Map<Long, Integer> goods;
+    private Map<Long, Integer> goods = new HashMap<>();
 
     public Long getId() {
         return id;

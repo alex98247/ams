@@ -7,7 +7,7 @@ import static java.util.Objects.hash;
  */
 public class Good {
 
-    private long id;
+    private Long id;
 
     private String name;
 
@@ -19,11 +19,11 @@ public class Good {
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

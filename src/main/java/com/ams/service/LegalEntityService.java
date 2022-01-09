@@ -11,4 +11,6 @@ public interface LegalEntityService {
     void upsert(LegalEntity legalEntity);
 
     LegalEntity getLegalEntity(long id);
+
+    LegalEntity getLegalEntityByInn(String inn);
 }

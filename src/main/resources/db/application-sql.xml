@@ -13,8 +13,8 @@
     </entry>
     <entry key="createApplication">
         <![CDATA[
-            INSERT INTO application (customer_id, finished, manager_username)
-            VALUES (?, ?, ?);
+            INSERT INTO application (id, customer_id, finished, manager_username)
+            VALUES (?, ?, ?, ?);
         ]]>
     </entry>
     <entry key="updateApplication">
@@ -34,6 +34,11 @@
     <entry key="getLegalEntityByName">
         <![CDATA[
             SELECT * FROM legal_entity WHERE name LIKE ?;
+        ]]>
+    </entry>
+    <entry key="getLegalEntityByInn">
+        <![CDATA[
+            SELECT * FROM legal_entity WHERE inn = ?;
         ]]>
     </entry>
     <entry key="deleteLegalEntityById">
@@ -59,6 +64,11 @@
             SELECT * FROM good_application WHERE application_id = ?;
         ]]>
     </entry>
+    <entry key="findAllApplication">
+        <![CDATA[
+            SELECT * FROM application;
+        ]]>
+    </entry>
     <entry key="removeGoodApplication">
         <![CDATA[
             DELETE FROM good_application WHERE application_id = ?;
@@ -75,7 +85,7 @@
         <![CDATA[
                 UPDATE good
                     SET name = ?,
-                    count = ?,
+                    count = ?
                     WHERE id = ?;
         ]]>
     </entry>
@@ -89,6 +99,11 @@
             DELETE FROM good WHERE id = ?;
         ]]>
     </entry>
+    <entry key="getAllGood">
+        <![CDATA[
+            SELECT * FROM good;
+        ]]>
+    </entry>
 
     <entry key="reserveGood">
         <![CDATA[
@@ -98,11 +113,6 @@
     <entry key="releaseGood">
         <![CDATA[
             DELETE FROM good_reserve WHERE good_id in (%s);
-        ]]>
-    </entry>
-    <entry key="findGood">
-        <![CDATA[
-            SELECT * FROM good_reserve WHERE good_id in (%s);
         ]]>
     </entry>
 

@@ -2,6 +2,8 @@ package com.ams.dao;
 
 import com.ams.service.application.po.ApplicationPO;
 
+import java.util.List;
+
 public interface ApplicationDAO {
 
     ApplicationPO find(long id);
@@ -11,4 +13,6 @@ public interface ApplicationDAO {
     void update(ApplicationPO application);
 
     void delete(long id);
+
+    List<ApplicationPO> getAll(String username);
 }

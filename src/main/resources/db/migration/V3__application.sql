@@ -9,7 +9,7 @@ create table legal_entity
 
 create table good
 (
-    id    integer primary key,
+    id    serial primary key,
     name  varchar,
     count integer
 );

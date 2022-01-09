@@ -20,5 +20,7 @@ public interface WorkflowService {
 
     void assign(String taskId, String username);
 
+    Map<String, Object> getVariables(String taskId);
+
     String start(String username);
 }

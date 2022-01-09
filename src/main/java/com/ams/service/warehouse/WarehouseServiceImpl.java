@@ -5,6 +5,7 @@ import com.ams.dao.WarehouseDAO;
 import com.ams.service.WarehouseService;
 import com.ams.service.warehouse.po.GoodPO;
 import com.ams.service.warehouse.po.ReservePO;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -65,11 +66,16 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public void addNewGood(Good good, int count) {
+    public void upsert(Good good, int count) {
         GoodPO goodPO = new GoodPO();
         goodPO.setName(good.getName());
         goodPO.setCount(count);
-        warehouseDAO.insert(goodPO);
+        if (good.getId() == null) {
+            warehouseDAO.insert(goodPO);
+        } else {
+            goodPO.setId(good.getId());
+            warehouseDAO.update(goodPO);
+        }
     }
 
     @Override
@@ -81,5 +87,28 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         goodPO.setCount(count + goodPO.getCount());
         warehouseDAO.insert(goodPO);
+    }
+
+    @Override
+    public Map<Good, Integer> getAll() {
+        Map<Good, Integer> result = new HashMap<>();
+        List<GoodPO> pos = warehouseDAO.getAll();
+        for (var po : pos) {
+            Good good = new Good();
+            good.setId(po.getId());
+            good.setName(po.getName());
+            result.put(good, po.getCount());
+        }
+
+        return result;
+    }
+
+    @Override
+    public Pair<Good, Integer> getGoodPosition(long id) {
+        GoodPO po = warehouseDAO.find(id);
+        Good good = new Good();
+        good.setId(po.getId());
+        good.setName(po.getName());
+        return Pair.of(good, po.getCount());
     }
 }

@@ -37,6 +37,12 @@ public class LegalEntityRest {
         return ResponseEntity.ok().body(result);
     }
 
+    @GetMapping("/find")
+    public ResponseEntity<LegalEntity> getLegalEntityByInn(@QueryParam("inn") String inn) {
+        LegalEntity result = legalEntityService.getLegalEntityByInn(inn);
+        return ResponseEntity.ok().body(result);
+    }
+
     @PostMapping
     public ResponseEntity<Void> saveLegalEntity(@RequestBody LegalEntitySaveUpdateRequest request) {
         LegalEntity legalEntity = new LegalEntity();

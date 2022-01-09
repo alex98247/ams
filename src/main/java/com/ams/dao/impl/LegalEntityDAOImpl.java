@@ -17,6 +17,7 @@ public class LegalEntityDAOImpl implements LegalEntityDAO {
     private final String deleteLegalEntityById;
     private final String createLegalEntity;
     private final String getLegalEntityByName;
+    private final String getLegalEntityByInn;
     private final JdbcTemplate jdbcTemplate;
 
     public LegalEntityDAOImpl(JdbcTemplate jdbcTemplate, @Qualifier("application-sql") final Properties sql) {
@@ -25,6 +26,7 @@ public class LegalEntityDAOImpl implements LegalEntityDAO {
         deleteLegalEntityById = sql.getProperty("deleteLegalEntityById");
         createLegalEntity = sql.getProperty("createLegalEntity");
         getLegalEntityByName = sql.getProperty("getLegalEntityByName");
+        getLegalEntityByInn = sql.getProperty("getLegalEntityByInn");
     }
 
     @Override
@@ -46,5 +48,10 @@ public class LegalEntityDAOImpl implements LegalEntityDAO {
     @Override
     public void delete(long id) {
         jdbcTemplate.update(deleteLegalEntityById, id);
+    }
+
+    @Override
+    public LegalEntityPO getByInn(String inn) {
+        return jdbcTemplate.queryForObject(getLegalEntityByInn, LegalEntityRowMapper.DEFAULT_ROW_MAPPER, inn);
     }
 }

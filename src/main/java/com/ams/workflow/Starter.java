@@ -29,7 +29,7 @@ public class Starter implements InitializingBean {
         List<Task> list = EngineUtil.lookupProcessEngine(WorkflowConstants.WORKFLOW_ENGINE_NAME)
                 .getTaskService().createTaskQuery().processInstanceId(processInstance.getId()).list();
         if (!list.isEmpty()) {
-            workflowProcessEngine.complete(list.get(0).getId(), Map.of("new", true));
+            workflowProcessEngine.complete(list.get(0).getId(), Map.of("new", true, "caseDefinitionId", "sdsfkgl;fkg"));
             /*EngineUtil.lookupProcessEngine(CoreConfigurationConstants.WORKFLOW_ENGINE_NAME)
                     .getTaskService().complete(list.get(0).getId());*/
         }

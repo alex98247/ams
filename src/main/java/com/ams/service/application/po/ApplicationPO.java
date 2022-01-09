@@ -1,5 +1,6 @@
 package com.ams.service.application.po;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class ApplicationPO {
@@ -15,7 +16,7 @@ public class ApplicationPO {
     private Long customerId;
     private Boolean finished;
     private String managerUsername;
-    private Map<Long, Integer> goods;
+    private Map<Long, Integer> goods = new HashMap<>();
 
     public Long getId() {
         return id;

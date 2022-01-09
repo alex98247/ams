@@ -17,4 +17,6 @@ public interface LegalEntityDAO {
     List<LegalEntityPO> getByName(String name);
 
     void delete(long id);
+
+    LegalEntityPO getByInn(String inn);
 }

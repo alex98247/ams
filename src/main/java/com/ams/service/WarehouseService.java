@@ -1,6 +1,7 @@
 package com.ams.service;
 
 import com.ams.service.warehouse.Good;
+import org.apache.commons.lang3.tuple.Pair;
 
 import java.util.Map;
 import java.util.Set;
@@ -16,7 +17,11 @@ public interface WarehouseService {
 
     Map<Long, Integer> getGoodsCount(Set<Long> goods);
 
-    void addNewGood(Good good, int count);
+    void upsert(Good good, int count);
 
     void addGood(long goodId, int count);
+
+    Map<Good, Integer> getAll();
+
+    Pair<Good, Integer> getGoodPosition(long id);
 }

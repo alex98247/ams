@@ -9,6 +9,8 @@ public class TaskCompleteRequest {
 
     private String taskId;
 
+    private String applicationId;
+
     private Map<String, Object> variables;
 
     public String getTaskId() {
@@ -25,5 +27,13 @@ public class TaskCompleteRequest {
 
     public void setVariables(Map<String, Object> variables) {
         this.variables = variables;
+    }
+
+    public String getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
     }
 }

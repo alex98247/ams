@@ -85,4 +85,9 @@ public class WorkflowServiceImpl implements WorkflowService {
                     taskId, userName);*/
         }
     }
+
+    @Override
+    public Map<String, Object> getVariables(String taskId) {
+        return processEngine.getTaskService().getVariables(taskId);
+    }
 }
