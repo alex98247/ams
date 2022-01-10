@@ -10,6 +10,7 @@ public class ApplicationRequest {
     private Long id;
     private long customerId;
     private boolean needDelivery = false;
+    private String delivery;
     private Boolean finished = false;
     private String managerUsername;
     private Map<Long, Integer> goods = new HashMap<>();
@@ -60,5 +61,13 @@ public class ApplicationRequest {
 
     public void setNeedDelivery(boolean needDelivery) {
         this.needDelivery = needDelivery;
+    }
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
     }
 }

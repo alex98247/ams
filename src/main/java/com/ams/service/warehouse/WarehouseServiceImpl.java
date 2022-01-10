@@ -62,7 +62,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public Map<Long, Integer> getGoodsCount(Set<Long> goods) {
-        return null;
+        Map<Long, Integer> result = new HashMap<>();
+        Map<Long, Integer> existGoods = calculateGoodCount(getAll()).entrySet().stream()
+                .filter(x -> goods.contains(x.getKey().getId()))
+                .collect(Collectors.toMap(x -> x.getKey().getId(), Map.Entry::getValue));
+        goods.forEach(id -> result.put(id, existGoods.getOrDefault(id, 0)));
+        return result;
     }
 
     @Override
@@ -100,7 +105,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             result.put(good, po.getCount());
         }
 
-        return result;
+        return calculateGoodCount(result);
     }
 
     @Override
@@ -109,6 +114,26 @@ public class WarehouseServiceImpl implements WarehouseService {
         Good good = new Good();
         good.setId(po.getId());
         good.setName(po.getName());
-        return Pair.of(good, po.getCount());
+
+        Map<Good, Integer> goodCount = calculateGoodCount(Map.of(good, po.getCount()));
+        Integer count = goodCount.get(good);
+        return Pair.of(good, count);
     }
+
+    private Map<Good, Integer> calculateGoodCount(Map<Good, Integer> goods) {
+        Set<Long> goodIds = goods.keySet().stream().map(Good::getId).collect(Collectors.toSet());
+        Map<Long, Integer> reservedGoods = reserveGoodDAO.get(goodIds).stream()
+                .collect(Collectors.toMap(ReservePO::getGoodId, ReservePO::getCount));
+        Map<Good, Integer> result = new HashMap<>();
+        goods.forEach((k, v) -> {
+            if (reservedGoods.containsKey(k.getId())) {
+                result.put(k, v - reservedGoods.get(k.getId()));
+            } else {
+                result.put(k, v);
+            }
+        });
+
+        return result;
+    }
+
 }

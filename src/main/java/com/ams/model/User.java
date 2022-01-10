@@ -4,49 +4,27 @@ package com.ams.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
-@Table(name = "t_user")
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue
-    @Column(name = "id")
     private Long id;
 
-    @Column(name = "login")
     private String username;
 
-    @Column(name = "password")
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToMany
-    @JoinColumn(name = "role_ids")
     private List<Role> roles;
 
-    @Column(name = "is_locked")
     private boolean isLocked;
 
-    @Column(name = "is_expired")
     private boolean isExpired;
 
-    @Column(name = "is_pwd_expired")
     private boolean isPwdExpired;
 
     @Override
@@ -126,5 +104,9 @@ public class User implements UserDetails {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

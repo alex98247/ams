@@ -6,12 +6,14 @@ import com.ams.service.po.UserPO;
 import com.ams.service.rm.UserRowMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
 
     private final RoleDAO roleDAO;

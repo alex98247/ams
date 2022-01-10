@@ -30,7 +30,7 @@ public class SecurityToken implements Serializable {
     /**
      * User rights map.
      */
-    private final List<GrantedAuthority> rights = new ArrayList<>();
+    private final List<GrantedAuthority> authorities = new ArrayList<>();
 
     public String getToken() {
         return token;
@@ -40,21 +40,21 @@ public class SecurityToken implements Serializable {
         return createdAt;
     }
 
-    public List<GrantedAuthority> getRight() {
-        return new ArrayList<>(rights);
+    public List<GrantedAuthority> getAuthorities() {
+        return new ArrayList<>(authorities);
     }
 
     public static SecurityToken of(Authentication authentication) {
         SecurityToken securityToken = new SecurityToken();
         securityToken.createdAt = new Date();
         securityToken.token = UUID.randomUUID().toString();
-        securityToken.rights.addAll(authentication.getAuthorities());
+        securityToken.authorities.addAll(authentication.getAuthorities());
         securityToken.username = authentication.getName();
         return securityToken;
     }
 
     public Authentication toAuthentication() {
-        return new BearerToken(token, rights);
+        return new BearerToken(token, authorities);
     }
 
     public String getUsername() {

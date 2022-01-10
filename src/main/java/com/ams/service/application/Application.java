@@ -10,6 +10,7 @@ public class Application {
     private boolean needDelivery;
     private Boolean finished;
     private String managerUsername;
+    private String delivery;
     private Map<Long, Integer> goods;
 
     public Long getId() {
@@ -68,6 +69,15 @@ public class Application {
         result.setNeedDelivery(application.needDelivery());
         result.setGoods(application.getGoods());
         result.setManagerUsername(application.getManagerUsername());
+        result.setDelivery(application.getDelivery());
         return result;
+    }
+
+    public String getDelivery() {
+        return delivery;
+    }
+
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
     }
 }

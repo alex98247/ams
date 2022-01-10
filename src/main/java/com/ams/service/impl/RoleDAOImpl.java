@@ -7,6 +7,7 @@ import com.ams.service.po.RolePO;
 import com.ams.service.rm.RoleRowMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
  *
  * @author Alexey Mironov
  */
+@Repository
 public class RoleDAOImpl implements RoleDAO {
 
     private final JdbcTemplate jdbcTemplate;
