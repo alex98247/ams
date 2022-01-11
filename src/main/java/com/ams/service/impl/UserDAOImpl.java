@@ -17,6 +17,7 @@ import java.util.Properties;
 public class UserDAOImpl implements UserDAO {
 
     private final RoleDAO roleDAO;
+    private final UserRowMapper userRowMapper;
     private final String getUserByUsername;
     private final String getUsers;
     private final JdbcTemplate jdbcTemplate;
@@ -27,7 +28,8 @@ public class UserDAOImpl implements UserDAO {
 
     public UserDAOImpl(JdbcTemplate jdbcTemplate,
                        @Qualifier("security-sql") final Properties sql,
-                       RoleDAO roleDAO) {
+                       RoleDAO roleDAO,
+                       UserRowMapper userRowMapper) {
         this.jdbcTemplate = jdbcTemplate;
         this.saveUser = sql.getProperty("saveUser");
         this.getUserByUsername = sql.getProperty("getUserByUsername");
@@ -36,6 +38,7 @@ public class UserDAOImpl implements UserDAO {
         this.deleteUserRoleByUserId = sql.getProperty("deleteUserRoleByUserId");
         this.updateUser = sql.getProperty("updateUser");
         this.roleDAO = roleDAO;
+        this.userRowMapper = userRowMapper;
     }
 
     /**
@@ -64,7 +67,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public UserPO get(String username) {
-        return jdbcTemplate.queryForObject(getUserByUsername, UserRowMapper.DEFAULT_ROW_MAPPER, username);
+        return jdbcTemplate.queryForObject(getUserByUsername, userRowMapper, username);
     }
 
     /**
@@ -72,7 +75,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<UserPO> getUsers() {
-        return jdbcTemplate.query(getUsers, UserRowMapper.DEFAULT_ROW_MAPPER);
+        return jdbcTemplate.query(getUsers, userRowMapper);
     }
 
     /**

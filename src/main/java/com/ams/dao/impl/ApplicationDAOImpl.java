@@ -62,7 +62,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
     @Override
     public void create(ApplicationPO application) {
-        jdbcTemplate.update(createApplication, application.getId(), application.getCustomerId(), application.getFinished(), application.getManagerUsername());
+        jdbcTemplate.update(createApplication, application.getId(), application.getCustomerId(), application.getFinished(), application.getManagerUsername(), application.getDelivery(), application.isNeedDelivery());
         for (var good : application.getGoods().entrySet()) {
             jdbcTemplate.update(createGoodApplication, good.getKey(), application.getId(), good.getValue());
         }
@@ -70,7 +70,7 @@ public class ApplicationDAOImpl implements ApplicationDAO {
 
     @Override
     public void update(ApplicationPO application) {
-        jdbcTemplate.update(updateApplication, application.getCustomerId(), application.getFinished(), application.getManagerUsername(), application.getId());
+        jdbcTemplate.update(updateApplication, application.getCustomerId(), application.getFinished(), application.getDelivery(), application.isNeedDelivery(), application.getManagerUsername(), application.getId());
         jdbcTemplate.update(removeGoodApplication, application.getId());
         for (var good : application.getGoods().entrySet()) {
             jdbcTemplate.update(createGoodApplication, good.getKey(), application.getId(), good.getValue());

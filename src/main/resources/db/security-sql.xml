@@ -73,7 +73,7 @@
     </entry>
     <entry key="getRightsByRoleIds">
         <![CDATA[
-            SELECT id, name, role_id FROM t_right JOIN role_right ON right_id=id WHERE role_id in (%s);
+            SELECT t_right.id, name, role_id FROM t_right JOIN role_right ON t_right.id=role_right.right_id WHERE role_id in (%s);
         ]]>
     </entry>
     <entry key="saveRole">

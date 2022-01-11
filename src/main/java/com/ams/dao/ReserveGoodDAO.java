@@ -10,7 +10,9 @@ import java.util.Set;
  */
 public interface ReserveGoodDAO {
 
-    void reserve(List<ReservePO> reservePOs);
+    void insert(List<ReservePO> reservePOs);
+
+    void update(ReservePO reservePO);
 
     void release(List<ReservePO> reservePOs);
 

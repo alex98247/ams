@@ -1,13 +1,16 @@
-package com.ams.service.application;
-
-import com.ams.rest.request.ApplicationRequest;
+package com.ams.rest.response;
 
 import java.util.Map;
 
-public class Application {
+/**
+ * @author Alexey Mironov
+ */
+public class ApplicationResponse {
+
     private Long id;
     private long customerId;
-    private Boolean needDelivery;
+    private String customerName;
+    private boolean needDelivery;
     private Boolean finished;
     private String managerUsername;
     private String delivery;
@@ -53,24 +56,12 @@ public class Application {
         this.goods = goods;
     }
 
-    public Boolean getNeedDelivery() {
+    public boolean needDelivery() {
         return needDelivery;
     }
 
-    public void setNeedDelivery(Boolean needDelivery) {
+    public void setNeedDelivery(boolean needDelivery) {
         this.needDelivery = needDelivery;
-    }
-
-    public static Application of(ApplicationRequest application) {
-        Application result = new Application();
-        result.setCustomerId(application.getCustomerId());
-        result.setFinished(application.getFinished());
-        result.setId(application.getId());
-        result.setNeedDelivery(application.needDelivery());
-        result.setGoods(application.getGoods());
-        result.setManagerUsername(application.getManagerUsername());
-        result.setDelivery(application.getDelivery());
-        return result;
     }
 
     public String getDelivery() {
@@ -79,5 +70,13 @@ public class Application {
 
     public void setDelivery(String delivery) {
         this.delivery = delivery;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 }

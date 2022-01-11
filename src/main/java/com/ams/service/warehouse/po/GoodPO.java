@@ -7,10 +7,12 @@ public class GoodPO {
 
     public static final String FIELD_ID = "id";
     public static final String FIELD_NAME = "name";
+    public static final String FIELD_COST = "cost";
     public static final String COUNT = "count";
 
     private Long id;
     private String name;
+    private int cost;
     private int count;
 
     public Long getId() {
@@ -35,5 +37,13 @@ public class GoodPO {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }

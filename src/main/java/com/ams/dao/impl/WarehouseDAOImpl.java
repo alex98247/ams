@@ -34,7 +34,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
     @Override
     public void insert(GoodPO good) {
-        jdbcTemplate.update(insertGood, good.getName(), good.getCount());
+        jdbcTemplate.update(insertGood, good.getName(), good.getCount(), good.getCost());
     }
 
     @Override
@@ -49,7 +49,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 
     @Override
     public void update(GoodPO good) {
-        jdbcTemplate.update(updateGood, good.getName(), good.getCount(), good.getId());
+        jdbcTemplate.update(updateGood, good.getName(), good.getCount(), good.getCost(), good.getId());
     }
 
     @Override

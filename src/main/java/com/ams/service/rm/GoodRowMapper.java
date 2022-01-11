@@ -21,6 +21,7 @@ public class GoodRowMapper implements RowMapper<GoodPO> {
         po.setId(rs.getLong(GoodPO.FIELD_ID));
         po.setName(rs.getString(GoodPO.FIELD_NAME));
         po.setCount(rs.getInt(GoodPO.COUNT));
+        po.setCost(rs.getInt(GoodPO.FIELD_COST));
 
         return po;
 

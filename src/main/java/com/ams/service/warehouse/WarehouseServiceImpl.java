@@ -2,7 +2,10 @@ package com.ams.service.warehouse;
 
 import com.ams.dao.ReserveGoodDAO;
 import com.ams.dao.WarehouseDAO;
+import com.ams.model.OrderGood;
+import com.ams.service.ApplicationService;
 import com.ams.service.WarehouseService;
+import com.ams.service.application.Application;
 import com.ams.service.warehouse.po.GoodPO;
 import com.ams.service.warehouse.po.ReservePO;
 import org.apache.commons.lang3.tuple.Pair;
@@ -12,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -22,10 +26,14 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     private final ReserveGoodDAO reserveGoodDAO;
     private final WarehouseDAO warehouseDAO;
+    private final ApplicationService applicationService;
 
-    public WarehouseServiceImpl(ReserveGoodDAO reserveGoodDAO, WarehouseDAO warehouseDAO) {
+    public WarehouseServiceImpl(ReserveGoodDAO reserveGoodDAO,
+                                WarehouseDAO warehouseDAO,
+                                ApplicationService applicationService) {
         this.reserveGoodDAO = reserveGoodDAO;
         this.warehouseDAO = warehouseDAO;
+        this.applicationService = applicationService;
     }
 
     @Override
@@ -35,12 +43,16 @@ public class WarehouseServiceImpl implements WarehouseService {
         Map<Long, Integer> toReserve = new HashMap<>();
         for (var good : goods.entrySet()) {
             Integer reservedCount = reservedGoods.getOrDefault(good.getKey(), 0);
-            toReserve.put(good.getKey(), reservedCount + good.getValue());
+            if (reservedCount != 0) {
+                reserveGoodDAO.update(new ReservePO(good.getKey(), reservedCount + good.getValue()));
+            } else {
+                toReserve.put(good.getKey(), reservedCount + good.getValue());
+            }
         }
         List<ReservePO> reservePOS = toReserve.entrySet().stream()
                 .map(x -> new ReservePO(x.getKey(), x.getValue()))
                 .collect(Collectors.toList());
-        reserveGoodDAO.reserve(reservePOS);
+        reserveGoodDAO.insert(reservePOS);
     }
 
     @Override
@@ -57,13 +69,13 @@ public class WarehouseServiceImpl implements WarehouseService {
         List<ReservePO> releasePOS = toRelease.entrySet().stream()
                 .map(x -> new ReservePO(x.getKey(), x.getValue()))
                 .collect(Collectors.toList());
-        reserveGoodDAO.reserve(releasePOS);
+        reserveGoodDAO.insert(releasePOS);
     }
 
     @Override
     public Map<Long, Integer> getGoodsCount(Set<Long> goods) {
         Map<Long, Integer> result = new HashMap<>();
-        Map<Long, Integer> existGoods = calculateGoodCount(getAll()).entrySet().stream()
+        Map<Long, Integer> existGoods = getAll().entrySet().stream()
                 .filter(x -> goods.contains(x.getKey().getId()))
                 .collect(Collectors.toMap(x -> x.getKey().getId(), Map.Entry::getValue));
         goods.forEach(id -> result.put(id, existGoods.getOrDefault(id, 0)));
@@ -74,11 +86,18 @@ public class WarehouseServiceImpl implements WarehouseService {
     public void upsert(Good good, int count) {
         GoodPO goodPO = new GoodPO();
         goodPO.setName(good.getName());
-        goodPO.setCount(count);
+        goodPO.setCost(good.getCost());
         if (good.getId() == null) {
             warehouseDAO.insert(goodPO);
+            goodPO.setCount(count);
         } else {
             goodPO.setId(good.getId());
+            List<ReservePO> reservePOS = reserveGoodDAO.get(Set.of(good.getId()));
+            int reservedCount = 0;
+            if (!reservePOS.isEmpty()) {
+                reservedCount = reservePOS.get(0).getCount();
+            }
+            goodPO.setCount(count + reservedCount);
             warehouseDAO.update(goodPO);
         }
     }
@@ -102,6 +121,7 @@ public class WarehouseServiceImpl implements WarehouseService {
             Good good = new Good();
             good.setId(po.getId());
             good.setName(po.getName());
+            good.setCost(po.getCost());
             result.put(good, po.getCount());
         }
 
@@ -114,10 +134,43 @@ public class WarehouseServiceImpl implements WarehouseService {
         Good good = new Good();
         good.setId(po.getId());
         good.setName(po.getName());
+        good.setCost(po.getCost());
 
         Map<Good, Integer> goodCount = calculateGoodCount(Map.of(good, po.getCount()));
         Integer count = goodCount.get(good);
         return Pair.of(good, count);
+    }
+
+    @Override
+    public Map<Good, Integer> getOrderGoods(long applicationId) {
+        Application application = applicationService.get(applicationId);
+        Map<Long, Integer> warehouseGoods = getGoodsCount(application.getGoods().keySet());
+        Map<Long, Integer> diff = WarehouseUtils.getDiff(warehouseGoods, application.getGoods());
+        Map<Long, Good> allGoods = getAll().keySet().stream().collect(Collectors.toMap(Good::getId, Function.identity()));
+
+        Map<Good, Integer> result = new HashMap<>();
+        diff.forEach((k, v) -> result.put(allGoods.get(k), v));
+
+        return result;
+    }
+
+    @Override
+    public void insertOrderGood(List<OrderGood> orderGoods) {
+        /*List<OrderGoodPO> pos = orderGoods.stream().map(x -> {
+            OrderGoodPO po = new OrderGoodPO();
+            po.setCount(x.getCount());
+            po.setApplicationId(x.getApplicationId());
+            po.setGoodId(x.getGoodId());
+
+            return po;
+        }).collect(Collectors.toList());
+
+        orderGoodDAO.insert(pos);*/
+    }
+
+    @Override
+    public void removeOrderGoods(long applicationId) {
+        /*orderGoodDAO.remove(applicationId);*/
     }
 
     private Map<Good, Integer> calculateGoodCount(Map<Good, Integer> goods) {

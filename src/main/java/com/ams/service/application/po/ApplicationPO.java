@@ -9,6 +9,7 @@ public class ApplicationPO {
     public static final String FIELD_MANAGER = "manager_username";
     public static final String FIELD_FINISHED = "finished";
     public static final String FIELD_DELIVERY = "delivery";
+    public static final String FIELD_NEED_DELIVERY = "needDelivery";
 
     public static final String FIELD_GOOD_ID = "good_id";
     public static final String FIELD_GOOD_COUNT= "count";
@@ -18,6 +19,7 @@ public class ApplicationPO {
     private Boolean finished;
     private String managerUsername;
     private String delivery;
+    private boolean needDelivery;
     private Map<Long, Integer> goods = new HashMap<>();
 
     public Long getId() {
@@ -66,5 +68,13 @@ public class ApplicationPO {
 
     public void setDelivery(String delivery) {
         this.delivery = delivery;
+    }
+
+    public boolean isNeedDelivery() {
+        return needDelivery;
+    }
+
+    public void setNeedDelivery(boolean needDelivery) {
+        this.needDelivery = needDelivery;
     }
 }

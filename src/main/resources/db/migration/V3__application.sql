@@ -11,6 +11,7 @@ create table good
 (
     id    serial primary key,
     name  varchar,
+    cost  integer,
     count integer
 );
 
@@ -20,13 +21,15 @@ create table application
     id               serial primary key,
     customer_id      bigint REFERENCES legal_entity (id),
     finished         boolean,
+    delivery         varchar,
+    needDelivery     boolean,
     manager_username varchar
 );
 
 create table good_reserve
 (
-    good_id        integer primary key,
-    count          integer
+    good_id integer primary key,
+    count   integer
 );
 
 create table good_application

@@ -2,13 +2,13 @@ package com.ams.rest;
 
 import com.ams.rest.request.GoodRequest;
 import com.ams.rest.response.GoodPositionRO;
+import com.ams.rest.response.OrderGoodResponse;
 import com.ams.service.WarehouseService;
 import com.ams.service.warehouse.Good;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,5 +52,17 @@ public class WarehouseRest {
         good.setName(request.getName());
         warehouseService.upsert(good, request.getCount());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/get")
+    public ResponseEntity<List<OrderGoodResponse>> get(@QueryParam("applicationId") Long applicationId) {
+        List<OrderGoodResponse> result = warehouseService.getOrderGoods(applicationId).entrySet().stream().map(x -> {
+            OrderGoodResponse response = new OrderGoodResponse();
+            response.setName(x.getKey().getName());
+            response.setCount(x.getValue());
+            return response;
+        }).collect(Collectors.toList());
+
+        return ResponseEntity.ok(result);
     }
 }

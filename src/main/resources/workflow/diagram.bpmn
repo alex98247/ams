@@ -35,7 +35,7 @@
     <bpmn:sequenceFlow id="Flow_0nqj0hp" sourceRef="Gateway_1bqfalo" targetRef="Activity_00dtup5">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${existGoods}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1btup1j" sourceRef="Gateway_1ty19zi" targetRef="Activity_0rhgtk5">
+    <bpmn:sequenceFlow id="Flow_1btup1j" sourceRef="Gateway_1ty19zi" targetRef="Activity_delivery">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${needDelivery}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:exclusiveGateway id="Gateway_1aaz9n9">
@@ -43,7 +43,7 @@
       <bpmn:outgoing>Flow_05ogxb3</bpmn:outgoing>
       <bpmn:outgoing>Flow_1hxm4t1</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="Flow_00wzjax" sourceRef="Activity_00xux3u" targetRef="Activity_1t51wdr" />
+    <bpmn:sequenceFlow id="Flow_00wzjax" sourceRef="Activity_bill" targetRef="Activity_payment" />
     <bpmn:task id="Activity_0zda603" name="Отказ от оплаты">
       <bpmn:incoming>Flow_05ogxb3</bpmn:incoming>
       <bpmn:outgoing>Flow_15ln70w</bpmn:outgoing>
@@ -55,14 +55,14 @@
     <bpmn:sequenceFlow id="Flow_05ogxb3" sourceRef="Gateway_1aaz9n9" targetRef="Activity_0zda603">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!payed}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1hxm4t1" sourceRef="Gateway_1aaz9n9" targetRef="Activity_0irfnyn">
+    <bpmn:sequenceFlow id="Flow_1hxm4t1" sourceRef="Gateway_1aaz9n9" targetRef="Activity_assembly">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${payed}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_01nn58w" sourceRef="Activity_order_goods" targetRef="Activity_1dc9o4f" />
     <bpmn:endEvent id="Event_1eqqbfp">
       <bpmn:incoming>Flow_1incgln</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1incgln" sourceRef="Activity_0irfnyn" targetRef="Event_1eqqbfp" />
+    <bpmn:sequenceFlow id="Flow_1incgln" sourceRef="Activity_assembly" targetRef="Event_1eqqbfp" />
     <bpmn:userTask id="Activity_identify_customer" name="Идентификация контрагента" camunda:assignee="${responsible_assistant}">
       <bpmn:incoming>Flow_0u5pzrm</bpmn:incoming>
       <bpmn:outgoing>Flow_0wqprfx</bpmn:outgoing>
@@ -72,52 +72,37 @@
       <bpmn:outgoing>Flow_061qzzz</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Activity_order_goods" name="Заказ товара" camunda:assignee="${responsible_assistant}">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="application_id">${application_id}</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1bm873k</bpmn:incoming>
       <bpmn:outgoing>Flow_01nn58w</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_0rhgtk5" name="Условия доставки" camunda:assignee="${responsible_assistant}">
+    <bpmn:userTask id="Activity_delivery" name="Условия доставки" camunda:assignee="${responsible_assistant}">
       <bpmn:incoming>Flow_1btup1j</bpmn:incoming>
       <bpmn:outgoing>Flow_0w2mnd0</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_1t51wdr" name="Проверка оплаты" camunda:assignee="${responsible_assistant}">
+    <bpmn:userTask id="Activity_payment" name="Проверка оплаты" camunda:assignee="${responsible_assistant}">
       <bpmn:incoming>Flow_00wzjax</bpmn:incoming>
       <bpmn:outgoing>Flow_1qzleed</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Activity_0irfnyn" name="Сборка заказа" camunda:assignee="${responsible_assistant}">
+    <bpmn:userTask id="Activity_assembly" name="Сборка заказа" camunda:assignee="${responsible_assistant}">
       <bpmn:incoming>Flow_1hxm4t1</bpmn:incoming>
       <bpmn:outgoing>Flow_1incgln</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_00dtup5" name="Резервирование товара" camunda:expression="${GoodsReservationDelegate}">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="application_id">${application_id}</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
+    <bpmn:serviceTask id="Activity_00dtup5" name="Резервирование товара" camunda:delegateExpression="${goodsReservationDelegate}">
       <bpmn:incoming>Flow_0nqj0hp</bpmn:incoming>
       <bpmn:outgoing>Flow_1jyzvew</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="Activity_00xux3u" name="Выставление счета" camunda:assignee="${responsible_assistant}">
+    <bpmn:userTask id="Activity_bill" name="Выставление счета" camunda:assignee="${responsible_assistant}">
       <bpmn:incoming>Flow_0w2mnd0</bpmn:incoming>
       <bpmn:incoming>Flow_0dqp4jx</bpmn:incoming>
       <bpmn:outgoing>Flow_00wzjax</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Activity_1dc9o4f" name="Проверка товара на складе" camunda:expression="${GoodsCheckDelegate}">
-      <bpmn:extensionElements>
-        <camunda:inputOutput>
-          <camunda:inputParameter name="application_id">${application_id}</camunda:inputParameter>
-        </camunda:inputOutput>
-      </bpmn:extensionElements>
+    <bpmn:serviceTask id="Activity_1dc9o4f" name="Проверка товара на складе" camunda:delegateExpression="${goodsCheckDelegate}">
       <bpmn:incoming>Flow_01nn58w</bpmn:incoming>
       <bpmn:incoming>Flow_1ybii8h</bpmn:incoming>
       <bpmn:outgoing>Flow_0zef2dk</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0w2mnd0" sourceRef="Activity_0rhgtk5" targetRef="Activity_00xux3u" />
-    <bpmn:sequenceFlow id="Flow_0dqp4jx" sourceRef="Gateway_1ty19zi" targetRef="Activity_00xux3u">
+    <bpmn:sequenceFlow id="Flow_0w2mnd0" sourceRef="Activity_delivery" targetRef="Activity_bill" />
+    <bpmn:sequenceFlow id="Flow_0dqp4jx" sourceRef="Gateway_1ty19zi" targetRef="Activity_bill">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!needDelivery}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:userTask id="Activity_create_application" name="Создание заявки" camunda:assignee="${responsible_assistant}">
@@ -127,7 +112,7 @@
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_1ybii8h" sourceRef="Activity_create_application" targetRef="Activity_1dc9o4f" />
     <bpmn:sequenceFlow id="Flow_1jyzvew" sourceRef="Activity_00dtup5" targetRef="Gateway_1ty19zi" />
-    <bpmn:sequenceFlow id="Flow_1qzleed" sourceRef="Activity_1t51wdr" targetRef="Gateway_1aaz9n9" />
+    <bpmn:sequenceFlow id="Flow_1qzleed" sourceRef="Activity_payment" targetRef="Gateway_1aaz9n9" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="application">
@@ -250,19 +235,19 @@
       <bpmndi:BPMNShape id="Activity_1153rjz_di" bpmnElement="Activity_order_goods">
         <dc:Bounds x="870" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_11rfvlf_di" bpmnElement="Activity_0rhgtk5">
+      <bpmndi:BPMNShape id="Activity_11rfvlf_di" bpmnElement="Activity_delivery">
         <dc:Bounds x="1200" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_15xzicq_di" bpmnElement="Activity_1t51wdr">
+      <bpmndi:BPMNShape id="Activity_15xzicq_di" bpmnElement="Activity_payment">
         <dc:Bounds x="1670" y="330" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0vfrx0e_di" bpmnElement="Activity_0irfnyn">
+      <bpmndi:BPMNShape id="Activity_0vfrx0e_di" bpmnElement="Activity_assembly">
         <dc:Bounds x="1850" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1htgr2p_di" bpmnElement="Activity_00dtup5">
         <dc:Bounds x="1030" y="280" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_13rakum_di" bpmnElement="Activity_00xux3u">
+      <bpmndi:BPMNShape id="Activity_13rakum_di" bpmnElement="Activity_bill">
         <dc:Bounds x="1530" y="260" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0giw0s1_di" bpmnElement="Activity_1dc9o4f">

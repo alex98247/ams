@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
@@ -21,19 +22,23 @@ import java.util.stream.Collectors;
 @Repository
 public class ReserveGoodDAOImpl implements ReserveGoodDAO {
 
-    private final String reserveGood;
+    private final String insertReserve;
+    private final String updateReserve;
     private final String releaseGood;
+    private final String getReservedGood;
     private final JdbcTemplate jdbcTemplate;
 
     public ReserveGoodDAOImpl(JdbcTemplate jdbcTemplate, @Qualifier("application-sql") final Properties sql) {
         this.jdbcTemplate = jdbcTemplate;
-        reserveGood = sql.getProperty("reserveGood");
+        insertReserve = sql.getProperty("insertReserve");
+        updateReserve = sql.getProperty("updateReserve");
         releaseGood = sql.getProperty("releaseGood");
+        getReservedGood = sql.getProperty("getReservedGood");
     }
 
     @Override
-    public void reserve(List<ReservePO> reservePOs) {
-        jdbcTemplate.batchUpdate(reserveGood, new BatchPreparedStatementSetter() {
+    public void insert(List<ReservePO> reservePOs) {
+        jdbcTemplate.batchUpdate(insertReserve, new BatchPreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
                 ReservePO good = reservePOs.get(i);
@@ -49,18 +54,27 @@ public class ReserveGoodDAOImpl implements ReserveGoodDAO {
     }
 
     @Override
+    public void update(ReservePO reservePO) {
+        jdbcTemplate.update(updateReserve, reservePO.getCount(), reservePO.getGoodId());
+    }
+
+    @Override
     public void release(List<ReservePO> reservePOs) {
         String ids = reservePOs.stream().map(x -> x.getGoodId().toString()).collect(Collectors.joining(", "));
         String statement = String.format(releaseGood, ids);
         jdbcTemplate.update(statement);
-        reserve(reservePOs);
+        insert(reservePOs);
     }
 
     @Override
     public List<ReservePO> get(Set<Long> ids) {
-        String idStr = ids.stream().map(Object::toString).collect(Collectors.joining(", "));
-        String statement = String.format(releaseGood, idStr);
-        List<ReservePO> result = jdbcTemplate.query(statement, ReserveGoodRowMapper.DEFAULT_ROW_MAPPER);
-        return result;
+        try {
+            String idStr = ids.stream().map(Object::toString).collect(Collectors.joining(", "));
+            String statement = String.format(getReservedGood, idStr);
+            return jdbcTemplate.query(statement, ReserveGoodRowMapper.DEFAULT_ROW_MAPPER);
+        } catch (Exception ex) {
+            return Collections.emptyList();
+        }
+
     }
 }

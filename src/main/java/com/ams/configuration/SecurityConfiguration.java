@@ -67,11 +67,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
         return new GrantedAuthorityDefaults("");
     }
-
-    @Bean("security-sql")
-    public PropertiesFactoryBean dataSql() {
-        final PropertiesFactoryBean propertiesFactoryBean = new PropertiesFactoryBean();
-        propertiesFactoryBean.setLocation(new ClassPathResource("/db/security-sql.xml"));
-        return propertiesFactoryBean;
-    }
 }

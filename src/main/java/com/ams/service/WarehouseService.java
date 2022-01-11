@@ -1,8 +1,10 @@
 package com.ams.service;
 
+import com.ams.model.OrderGood;
 import com.ams.service.warehouse.Good;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,4 +26,10 @@ public interface WarehouseService {
     Map<Good, Integer> getAll();
 
     Pair<Good, Integer> getGoodPosition(long id);
+
+    Map<Good, Integer> getOrderGoods(long applicationId);
+
+    void insertOrderGood(List<OrderGood> orderGoods);
+
+    void removeOrderGoods(long applicationId);
 }

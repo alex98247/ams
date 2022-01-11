@@ -61,6 +61,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         target.setFinished(source.getFinished());
         target.setCustomerId(source.getCustomerId());
         target.setGoods(source.getGoods());
+        target.setNeedDelivery(source.getNeedDelivery());
         target.setDelivery(source.getDelivery());
         return target;
     }
@@ -75,6 +76,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         target.setFinished(source.getFinished());
         target.setCustomerId(source.getCustomerId());
         target.setGoods(source.getGoods());
+        target.setNeedDelivery(source.isNeedDelivery());
         target.setDelivery(source.getDelivery());
         return target;
     }

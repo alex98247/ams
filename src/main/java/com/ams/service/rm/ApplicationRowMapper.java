@@ -19,6 +19,8 @@ public class ApplicationRowMapper implements RowMapper<ApplicationPO> {
         po.setFinished(rs.getBoolean(ApplicationPO.FIELD_FINISHED));
         po.setManagerUsername(rs.getString(ApplicationPO.FIELD_MANAGER));
         po.setCustomerId(rs.getLong(ApplicationPO.FIELD_CUSTOMER_ID));
+        po.setNeedDelivery(rs.getBoolean(ApplicationPO.FIELD_NEED_DELIVERY));
+        po.setDelivery(rs.getString(ApplicationPO.FIELD_DELIVERY));
 
         return po;
 

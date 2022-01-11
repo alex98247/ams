@@ -1,5 +1,6 @@
 package com.ams.service.workflow.delegate;
 
+import com.ams.model.OrderGood;
 import com.ams.security.AuthorityType;
 import com.ams.service.ApplicationService;
 import com.ams.service.LoadBalancer;
@@ -14,7 +15,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class GoodsCheckDelegate implements JavaDelegate {
@@ -36,21 +39,26 @@ public class GoodsCheckDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        int id = (int) execution.getVariable(WorkflowConstants.APPLICATION_ID_KEY);
+        long id = Long.parseLong(execution.getProcessInstanceId());
         Application application = applicationService.get(id);
         Map<Long, Integer> warehouseGoods = warehouseService.getGoodsCount(application.getGoods().keySet());
 
-        boolean needOrder = WarehouseUtils.needOrder(warehouseGoods, application.getGoods());
-        Map<String, Object> variables = new HashMap<>();
+        Map<Long, Integer> diff = WarehouseUtils.getDiff(warehouseGoods, application.getGoods());
+        boolean needOrder = !diff.isEmpty();
         if (needOrder) {
-            variables.put(WorkflowConstants.EXIST_GOODS_KEY, false);
+            execution.setVariable(WorkflowConstants.EXIST_GOODS_KEY, false);
+/*            List<OrderGood> orderGoods = diff.entrySet().stream().map(x -> {
+                OrderGood orderGood = new OrderGood();
+                orderGood.setGoodId(x.getKey());
+                orderGood.setCount(x.getValue());
+                orderGood.setApplicationId(id);
+                return orderGood;
+            }).collect(Collectors.toList());
+            warehouseService.insertOrderGood(orderGoods);*/
             String user = loadBalancer.getUser(new SimpleGrantedAuthority(AuthorityType.ORDER.getName()));
-            variables.put(WorkflowConstants.RESPONSIBLE_ASSISTANT_KEY, user);
+            execution.setVariable(WorkflowConstants.RESPONSIBLE_ASSISTANT_KEY, user);
         } else {
-            variables.put(WorkflowConstants.EXIST_GOODS_KEY, true);
+            execution.setVariable(WorkflowConstants.EXIST_GOODS_KEY, true);
         }
-
-        variables.put(WorkflowConstants.APPLICATION_ID_KEY, id);
-        workflowService.complete(execution.getId(), variables);
     }
 }

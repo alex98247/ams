@@ -36,7 +36,8 @@ public class RightDAOImpl implements RightDAO {
      */
     @Override
     public Map<Long, List<RightPO>> getRights(Collection<Long> roleIds) {
-        SqlRowSet rs = jdbcTemplate.queryForRowSet(getRightsByRoleIds, StringUtils.join(roleIds, ","));
+        String statement = String.format(getRightsByRoleIds, StringUtils.join(roleIds, ","));
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(statement);
         Map<Long, List<RightPO>> result = new HashMap<>();
 
         while (rs.next()) {

@@ -11,6 +11,8 @@ public class Good {
 
     private String name;
 
+    private int cost;
+
     public String getName() {
         return name;
     }
@@ -42,5 +44,13 @@ public class Good {
     @Override
     public int hashCode() {
         return hash(id);
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
     }
 }
