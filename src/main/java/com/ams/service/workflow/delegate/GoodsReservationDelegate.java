@@ -2,6 +2,7 @@ package com.ams.service.workflow.delegate;
 
 import com.ams.security.AuthorityType;
 import com.ams.service.ApplicationService;
+import com.ams.service.BillService;
 import com.ams.service.LoadBalancer;
 import com.ams.service.WarehouseService;
 import com.ams.service.application.Application;
@@ -20,13 +21,16 @@ public class GoodsReservationDelegate implements JavaDelegate {
     private final ApplicationService applicationService;
     private final WarehouseService warehouseService;
     private final LoadBalancer loadBalancer;
+    private final BillService billService;
 
     public GoodsReservationDelegate(ApplicationService applicationService,
                                     WarehouseService warehouseService,
-                                    LoadBalancer loadBalancer) {
+                                    LoadBalancer loadBalancer,
+                                    BillService billService) {
         this.applicationService = applicationService;
         this.warehouseService = warehouseService;
         this.loadBalancer = loadBalancer;
+        this.billService = billService;
     }
 
     @Override
@@ -43,5 +47,7 @@ public class GoodsReservationDelegate implements JavaDelegate {
             execution.setVariable(WorkflowConstants.NEED_DELIVERY_KEY, false);
             execution.setVariable(WorkflowConstants.RESPONSIBLE_ASSISTANT_KEY, application.getManagerUsername());
         }
+
+        billService.saveBillAsPdf(id);
     }
 }
