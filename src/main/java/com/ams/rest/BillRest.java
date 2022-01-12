@@ -10,7 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("bill")
+@RequestMapping("/bill")
 public class BillRest {
 
     private final BillService billService;
