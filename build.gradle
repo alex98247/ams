@@ -32,6 +32,12 @@ dependencies {
     implementation 'org.camunda.bpm:camunda-engine-plugin-spin:7.15.0'
     implementation 'org.camunda.bpm.springboot:camunda-bpm-spring-boot-starter-rest:7.15.0'
 
+    // JasperReports
+    implementation group: 'net.sf.jasperreports', name: 'jasperreports', version: '6.18.1'
+    implementation group: 'net.sf.jasperreports', name: 'jasperreports-fonts', version: '6.18.1'
+
+    // Apache Commons
+    implementation group: 'commons-io', name: 'commons-io', version: '2.6'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'

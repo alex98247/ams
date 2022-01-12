@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_Landscape" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a3d32046-325b-4305-97a2-77a53678d5bd">
+	<style name="Default" isDefault="true" pdfFontName="EBGaramond_Regular.ttf" pdfEncoding="Cp1251"/>
+	<parameter name="BILL_ID" class="java.lang.Long"/>
+	<parameter name="CONSUMER_NAME" class="java.lang.String"/>
+	<parameter name="CONSUMER_INN" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="goods_id" class="java.lang.Long"/>
+	<field name="goods_name" class="java.lang.String"/>
+	<field name="goods_count" class="java.lang.Integer"/>
+	<field name="goods_cost" class="java.lang.Integer"/>
+	<field name="goods_totalcost" class="java.lang.Integer"/>
+	<variable name="TOTAL_COST" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{goods_totalcost}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="47" splitType="Stretch">
+			<textField>
+				<reportElement x="175" y="10" width="100" height="25" uuid="de272b3a-68f5-4be4-8b8b-546cefa4d9aa">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{BILL_ID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="305" y="10" width="19" height="25" uuid="82d24b33-496a-409e-9d57-07c88962eee9">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[от]]></text>
+			</staticText>
+			<line>
+				<reportElement x="160" y="35" width="131" height="1" uuid="e90df268-3311-4461-a601-4c10c4b367a5">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<line>
+				<reportElement x="340" y="35" width="180" height="1" uuid="aa00ff85-8ed4-4293-a761-822f94c1b78d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<textField pattern="dd MMMMM, yyyy hh:mm">
+				<reportElement x="340" y="10" width="180" height="25" uuid="9a0dba37-a982-4b51-8301-53dc7ead0d48">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="139" height="25" uuid="371ffb47-53dd-452b-af03-6e4474109b2a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman" size="16"/>
+				</textElement>
+				<text><![CDATA[Счет-фактура №]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="168" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="6" width="120" height="18" uuid="e19d4752-9c8d-47fe-a085-d8127e9adb17">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Продавец]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="6" width="648" height="18" uuid="361dc321-af52-4880-850a-6b90f9f2cdf8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ООО "Кофемолка"]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="24" width="120" height="18" uuid="296b70b2-0973-48db-a1f1-b6825ef4610f">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Адрес]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="24" width="648" height="18" uuid="bb12e3e6-b97f-41ed-b0ab-378cb9047e91">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[199397, г. Санкт-Петербург, ул. Лесная, д. 44]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="42" width="120" height="18" uuid="1a8eba78-9784-4bd9-bc20-75af95a2f24b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ИНН/КПП продавца]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="42" width="648" height="18" uuid="c3217ec5-b87d-4e95-82fa-4eb7cf32d59a">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[7702223335/7703334448]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="70" width="120" height="18" uuid="daf38d64-94e8-45aa-95fc-044d137c73f8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Покупатель]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="88" width="120" height="18" uuid="8ccf9d21-e691-411b-a588-ff9604d06ba4">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ИНН покупателя]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="106" width="120" height="18" uuid="f50e31d1-ff1a-4dcf-ba14-98b6903621b2">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Валюта]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="70" width="648" height="18" uuid="569f230d-008b-4a84-901b-0c6696ba0264">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONSUMER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="88" width="648" height="18" uuid="54ae9515-f0fc-4d7c-a9a2-8987a5f8c25d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONSUMER_INN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="106" width="648" height="18" uuid="fbdf7471-bef1-45dd-b38f-0d3d064e2d83">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[российский рубль, 643]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="28" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="99" height="20" uuid="f5f90bc2-6151-407a-ad5f-59046fc31405">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="838dc274-8a4f-44db-a1d6-37a274e41a09"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[ID товара]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="0" width="189" height="20" uuid="a94348d9-3ad7-4354-ac87-2b3f8a2ed5d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1f40876-4761-494b-99ea-87c30b5161c5"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Наименование]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="148" height="20" uuid="89b70d93-c2fa-4ce4-8c2f-584102822871">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ed0b898-c638-4975-9e80-1a63977ae702"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Цена за 1 ед. товара]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="322" y="0" width="148" height="20" uuid="27b97b39-6411-4bcc-906b-96f135642768">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5274e588-321c-44f2-8d5e-d9e32139b76a"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Количество]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="642" y="0" width="148" height="20" uuid="3dd65576-ab2d-42eb-91f7-10fae3e76c6c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="648b119a-5454-454d-8794-0cfaadd12961"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Стоимость - всего]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="0" width="98" height="20" uuid="8b4b34d2-9e3b-42f0-8b23-bc2d7d0e5fe2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="838dc274-8a4f-44db-a1d6-37a274e41a09"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goods_id}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="120" y="0" width="189" height="20" uuid="571a22c0-22c8-4d5a-bc41-2b865cb5f689">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1f40876-4761-494b-99ea-87c30b5161c5"/>
+				</reportElement>
+				<textElement textAlignment="Left">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goods_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="322" y="0" width="148" height="20" uuid="17797f4c-7faf-49de-94ac-37d0fb37ed49">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1ed0b898-c638-4975-9e80-1a63977ae702"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goods_count}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="148" height="20" uuid="204cb1b3-a27a-4479-bb47-c956c1d98e40">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5274e588-321c-44f2-8d5e-d9e32139b76a"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goods_cost}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="642" y="0" width="148" height="20" uuid="99360e3d-6990-4780-aa7d-7b0d11bb082e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="648b119a-5454-454d-8794-0cfaadd12961"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{goods_totalcost}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="57" splitType="Stretch">
+			<line>
+				<reportElement x="10" y="10" width="781" height="1" uuid="d653ae9c-bddb-410a-8692-a5015f938304">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+			</line>
+			<staticText>
+				<reportElement x="470" y="14" width="148" height="24" uuid="e1aeaa61-f1ae-44a4-a39e-213eacaea395">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Всего к оплате:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="628" y="15" width="162" height="23" uuid="a3a49ef6-67a2-4e31-a6c4-c9de6afeb7c8">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="18"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL_COST}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>
